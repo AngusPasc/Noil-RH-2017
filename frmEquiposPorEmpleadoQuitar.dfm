@@ -5,7 +5,7 @@ object frm_EquiposPorEmpleadoQuitar: Tfrm_EquiposPorEmpleadoQuitar
   BorderStyle = bsSingle
   Caption = 'Remover equipo a empleado'
   ClientHeight = 160
-  ClientWidth = 406
+  ClientWidth = 409
   Color = 13683905
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3135,131 +3135,116 @@ object frm_EquiposPorEmpleadoQuitar: Tfrm_EquiposPorEmpleadoQuitar
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
-  object Label1: TLabel
-    Left = 32
-    Top = 53
-    Width = 114
-    Height = 15
-    Caption = 'Fecha de Remoci'#243'n:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-  end
-  object Label2: TLabel
-    Left = 32
-    Top = 24
-    Width = 43
-    Height = 15
-    Caption = 'Art'#237'culo:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-  end
-  object dbEquipo: TDBLabelEdit
-    Left = 152
-    Top = 24
-    Width = 225
-    Height = 17
-    DataField = 'descripcion'
-    DataSource = frm_Empleados.ds_EquiposPorEmpleado
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    EditStyle.BorderStyle = bsSingle
-    EditStyle.Font.Charset = DEFAULT_CHARSET
-    EditStyle.Font.Color = clWindowText
-    EditStyle.Font.Height = -11
-    EditStyle.Font.Name = 'Tahoma'
-    EditStyle.Font.Style = []
-    EditStyle.MaxLength = 0
-    Caption = 'dbEquipo'
-    ShowAccelChar = False
-  end
-  object Label3: TLabel
-    Left = 32
-    Top = 85
-    Width = 98
-    Height = 15
-    Caption = 'Estado de Equipo'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-  end
-  object DbFechaRemocion: TDBDateEdit
-    Left = 152
-    Top = 51
-    Width = 225
-    Height = 23
-    Margins.Left = 4
-    Margins.Top = 1
-    DateAutoBetween = False
-    DataField = 'dFecha_Remocion'
-    DataSource = frm_Empleados.ds_EquiposPorEmpleado
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    NumGlyphs = 2
-    ParentFont = False
+  object dxLayoutControl1: TdxLayoutControl
+    Left = 0
+    Top = 0
+    Width = 409
+    Height = 160
+    Align = alClient
     TabOrder = 0
-  end
-  object Button1: TButton
-    Left = 152
-    Top = 116
-    Width = 75
-    Height = 25
-    Caption = 'Guardar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 302
-    Top = 116
-    Width = 75
-    Height = 25
-    Caption = 'Cancelar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-    OnClick = Button2Click
-  end
-  object dbEstado: TDBEdit
-    Left = 152
-    Top = 82
-    Width = 225
-    Height = 23
-    DataField = 'sStatus_Entrega'
-    DataSource = frm_Empleados.ds_EquiposPorEmpleado
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 3
+    LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+    object dbEquipo: TcxDBLabel
+      Left = 113
+      Top = 10
+      DataBinding.DataField = 'descripcion'
+      DataBinding.DataSource = frm_Empleados.ds_EquiposPorEmpleado
+      ParentFont = False
+      Style.HotTrack = False
+      Height = 21
+      Width = 272
+    end
+    object DbFechaRemocion: TcxDBDateEdit
+      Left = 113
+      Top = 37
+      DataBinding.DataField = 'dFecha_Remocion'
+      DataBinding.DataSource = frm_Empleados.ds_EquiposPorEmpleado
+      ParentFont = False
+      Style.HotTrack = False
+      TabOrder = 1
+      Width = 121
+    end
+    object dbEstado: TcxDBTextEdit
+      Left = 113
+      Top = 64
+      DataBinding.DataField = 'sStatus_Entrega'
+      DataBinding.DataSource = frm_Empleados.ds_EquiposPorEmpleado
+      ParentFont = False
+      Style.HotTrack = False
+      TabOrder = 2
+      Width = 121
+    end
+    object Button1: TcxButton
+      Left = 101
+      Top = 111
+      Width = 100
+      Height = 25
+      Caption = 'Guardar'
+      TabOrder = 3
+      OnClick = Button1Click
+    end
+    object Button2: TcxButton
+      Left = 207
+      Top = 111
+      Width = 100
+      Height = 25
+      Caption = 'Cancelar'
+      TabOrder = 4
+    end
+    object dxLayoutControl1Group_Root: TdxLayoutGroup
+      AlignHorz = ahClient
+      AlignVert = avTop
+      ButtonOptions.Buttons = <>
+      Hidden = True
+      ShowBorder = False
+      Index = -1
+    end
+    object dxLayoutControl1Item1: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      CaptionOptions.Text = 'Art'#237'culo:'
+      Control = dbEquipo
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutControl1Item2: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      CaptionOptions.Text = 'Fecha de Remoci'#243'n:'
+      Control = DbFechaRemocion
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutControl1Item3: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      CaptionOptions.Text = 'Estado de Equipo:'
+      Padding.Bottom = 20
+      Padding.AssignedValues = [lpavBottom]
+      Control = dbEstado
+      ControlOptions.ShowBorder = False
+      Index = 2
+    end
+    object dxLayoutControl1Item4: TdxLayoutItem
+      Parent = dxLayoutControl1Group1
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = Button1
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutControl1Item5: TdxLayoutItem
+      Parent = dxLayoutControl1Group1
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = Button2
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutControl1Group1: TdxLayoutAutoCreatedGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahCenter
+      LayoutDirection = ldHorizontal
+      Index = 3
+      AutoCreated = True
+    end
   end
   object zqEquipos: TZQuery
     Connection = connection.zConnection

@@ -21,30 +21,42 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Menus, cxButtons;
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Menus, cxButtons,
+  dxSkinscxPCPainter, dxLayoutcxEditAdapters, dxLayoutContainer, dxLayoutControl,
+  cxSpinEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
+  dxLayoutControlAdapters, frm_inteligent;
 
 type
   Tfrm_EquiposPorEmpleado = class(TForm)
-  Label1: TLabel;
-  Label2: TLabel;
-  Label3: TLabel;
-    dbEquipos: TDBLookupComboBox;
-  Button1: TButton;
-  Button2: TButton;
   zqEquipos: TZQuery;
   dsEquipos: TDataSource;
-  Label4: TLabel;
   zqCategoriaEquipo: TZQuery;
   ds_CategoriaEquipo: TDataSource;
-    dbCatEquipos: TDBLookupComboBox;
     zqCategoriaEquiposIdFamilia: TStringField;
     zqCategoriaEquiposDescripcion: TStringField;
-    Label5: TLabel;
+    dxLayoutControl1Group_Root: TdxLayoutGroup;
+    dxLayoutControl1: TdxLayoutControl;
     cxFecha: TcxDateEdit;
+    dxLayoutControl1Item1: TdxLayoutItem;
+    dbCatEquipos: TcxDBLookupComboBox;
+    dxLayoutControl1Item2: TdxLayoutItem;
+    dbEquipos: TcxDBLookupComboBox;
+    dxLayoutControl1Item3: TdxLayoutItem;
     cxStatusRecepcion: TcxTextEdit;
-    cxCantidad: TcxTextEdit;
-    btnEquipos: TcxButton;
+    dxLayoutControl1Item4: TdxLayoutItem;
+    cxCantidad: TcxSpinEdit;
+    dxLayoutControl1Item5: TdxLayoutItem;
+    Button1: TcxButton;
+    dxLayoutControl1Item6: TdxLayoutItem;
+    Button2: TcxButton;
+    dxLayoutControl1Item7: TdxLayoutItem;
+    dxLayoutControl1Group1: TdxLayoutAutoCreatedGroup;
     btnCategoria: TcxButton;
+    dxLayoutControl1Item8: TdxLayoutItem;
+    btnEquipos: TcxButton;
+    dxLayoutControl1Item9: TdxLayoutItem;
+    dxLayoutControl1Group2: TdxLayoutAutoCreatedGroup;
+    dxLayoutControl1Group3: TdxLayoutAutoCreatedGroup;
   procedure FormClose(Sender: TObject; var Action: TCloseAction);
   procedure FormShow(Sender: TObject);
   procedure Button1Click(Sender: TObject);
@@ -96,8 +108,8 @@ begin
         qryEquiposporEmpleado.Append;
         qryEquiposporEmpleado.FieldByName('sIdEmpleado').AsString := frm_Empleados.zqEmpleados.FieldByName('sIdEmpleado').AsString ;
         qryEquiposporEmpleado.FieldValues['iIdEquipo']            := zqEquipos.FieldByName('iId').AsInteger;
-        //qryEquiposporEmpleado.FieldValues['sNombreEntrega']       := frm_Empleados.tsNombreEntrega.text;
-        //qryEquiposporEmpleado.FieldValues['sNombreAutorizacion']  := frm_Empleados.tsNombreAutoriza.text;
+//        qryEquiposporEmpleado.FieldValues['sNombreEntrega']       := frm_Empleados.tsNombreEntrega.text;//frm_Empleados.tsNombreEntrega.text;
+//        qryEquiposporEmpleado.FieldValues['sNombreAutorizacion']  := frm_Empleados.tsNombreAutoriza.text;
         qryEquiposporEmpleado.FieldValues['sStatus_Recepcion']    := cxStatusRecepcion.text;
         qryEquiposporEmpleado.FieldValues['bActivo']              := '1';
         qryEquiposporEmpleado.FieldValues['dFecha_recepcion']     := cxFecha.Date;
@@ -130,7 +142,7 @@ end;
 procedure Tfrm_EquiposPorEmpleado.dbCatEquiposClick(Sender: TObject);
 begin
   zqEquipos.Active := False;
-  zqEquipos.Params.ParamByName('Categoria').AsString:= dbCatEquipos.KeyValue;
+  zqEquipos.Params.ParamByName('Categoria').AsString:= dbCatEquipos.EditValue;
   zqEquipos.Open;
   dbEquipos.Refresh;
 end;

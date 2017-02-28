@@ -4,8 +4,8 @@ object frm_EquiposPorEmpleado: Tfrm_EquiposPorEmpleado
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsSingle
   Caption = 'Agregar un Equipo a Empleado'
-  ClientHeight = 206
-  ClientWidth = 421
+  ClientHeight = 221
+  ClientWidth = 409
   Color = 13683905
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3134,181 +3134,204 @@ object frm_EquiposPorEmpleado: Tfrm_EquiposPorEmpleado
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
-  object Label1: TLabel
-    Left = 12
-    Top = 16
-    Width = 116
-    Height = 15
-    Caption = 'Fecha de Recepci'#243'n:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object Label2: TLabel
-    Left = 12
-    Top = 44
-    Width = 57
-    Height = 15
-    Caption = 'Categor'#237'a:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object Label3: TLabel
-    Left = 12
-    Top = 72
-    Width = 27
-    Height = 15
-    Caption = 'Item:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object Label4: TLabel
-    Left = 12
-    Top = 100
-    Width = 113
-    Height = 15
-    Caption = 'Estado del producto:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object Label5: TLabel
-    Left = 12
-    Top = 129
-    Width = 50
-    Height = 15
-    Caption = 'Cantidad'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object dbEquipos: TDBLookupComboBox
-    Left = 132
-    Top = 69
-    Width = 245
-    Height = 23
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    KeyField = 'sidInsumo'
-    ListField = 'descripcion'
-    ListSource = dsEquipos
-    ParentFont = False
+  object dxLayoutControl1: TdxLayoutControl
+    Left = 0
+    Top = 0
+    Width = 409
+    Height = 221
+    Align = alClient
     TabOrder = 0
-  end
-  object Button1: TButton
-    Left = 132
-    Top = 173
-    Width = 74
-    Height = 25
-    Caption = 'Guardar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 282
-    Top = 173
-    Width = 75
-    Height = 25
-    Caption = 'Cancelar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-    OnClick = Button2Click
-  end
-  object dbCatEquipos: TDBLookupComboBox
-    Left = 132
-    Top = 41
-    Width = 245
-    Height = 23
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Arial'
-    Font.Style = []
-    KeyField = 'sIdFamilia'
-    ListField = 'sDescripcion'
-    ListSource = ds_CategoriaEquipo
-    ParentFont = False
-    TabOrder = 3
-    OnClick = dbCatEquiposClick
-  end
-  object cxFecha: TcxDateEdit
-    Left = 134
-    Top = 14
-    ParentFont = False
-    TabOrder = 4
-    Width = 195
-  end
-  object cxStatusRecepcion: TcxTextEdit
-    Left = 134
-    Top = 96
-    ParentFont = False
-    TabOrder = 5
-    Text = 'BUENO'
-    Width = 243
-  end
-  object cxCantidad: TcxTextEdit
-    Left = 131
-    Top = 122
-    ParentFont = False
-    TabOrder = 6
-    Text = '0'
-    Width = 246
-  end
-  object btnEquipos: TcxButton
-    Left = 383
-    Top = 72
-    Width = 27
-    Height = 25
-    Caption = '...'
-    TabOrder = 7
-    Visible = False
-    OnClick = btnEquiposClick
-  end
-  object btnCategoria: TcxButton
-    Left = 383
-    Top = 41
-    Width = 27
-    Height = 25
-    Caption = '...'
-    TabOrder = 8
-    Visible = False
-    OnClick = btnCategoriaClick
+    LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+    object dbCatEquipos: TcxDBLookupComboBox
+      Left = 117
+      Top = 37
+      ParentFont = False
+      Properties.KeyFieldNames = 'sIdFamilia'
+      Properties.ListColumns = <
+        item
+          FieldName = 'sDescripcion'
+        end>
+      Properties.ListSource = ds_CategoriaEquipo
+      Style.HotTrack = False
+      TabOrder = 1
+      Width = 212
+    end
+    object dbEquipos: TcxDBLookupComboBox
+      Left = 117
+      Top = 68
+      ParentFont = False
+      Properties.KeyFieldNames = 'sidInsumo'
+      Properties.ListColumns = <
+        item
+          FieldName = 'descripcion'
+        end>
+      Properties.ListSource = dsEquipos
+      Style.HotTrack = False
+      TabOrder = 3
+      Width = 145
+    end
+    object cxStatusRecepcion: TcxTextEdit
+      Left = 117
+      Top = 99
+      ParentFont = False
+      Style.HotTrack = False
+      TabOrder = 5
+      Width = 251
+    end
+    object cxCantidad: TcxSpinEdit
+      Left = 117
+      Top = 126
+      ParentFont = False
+      Style.HotTrack = False
+      TabOrder = 6
+      Width = 148
+    end
+    object Button1: TcxButton
+      Left = 101
+      Top = 173
+      Width = 100
+      Height = 25
+      Caption = 'Guardar'
+      TabOrder = 7
+      OnClick = Button1Click
+    end
+    object Button2: TcxButton
+      Left = 207
+      Top = 173
+      Width = 100
+      Height = 25
+      Caption = 'Cancelar'
+      TabOrder = 8
+      OnClick = Button2Click
+    end
+    object btnCategoria: TcxButton
+      Left = 374
+      Top = 37
+      Width = 25
+      Height = 25
+      TabOrder = 2
+      OptionsImage.ImageIndex = 0
+      OptionsImage.Images = frmInteligent.cxImageList1
+    end
+    object btnEquipos: TcxButton
+      Left = 374
+      Top = 68
+      Width = 25
+      Height = 25
+      TabOrder = 4
+      OptionsImage.ImageIndex = 0
+      OptionsImage.Images = frmInteligent.cxImageList1
+    end
+    object cxFecha: TcxDateEdit
+      Left = 117
+      Top = 10
+      ParentFont = False
+      Style.HotTrack = False
+      TabOrder = 0
+      Width = 148
+    end
+    object dxLayoutControl1Group_Root: TdxLayoutGroup
+      AlignHorz = ahClient
+      AlignVert = avTop
+      ButtonOptions.Buttons = <>
+      Hidden = True
+      ShowBorder = False
+      Index = -1
+    end
+    object dxLayoutControl1Item2: TdxLayoutItem
+      Parent = dxLayoutControl1Group2
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'Categor'#237'a:'
+      Control = dbCatEquipos
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutControl1Item3: TdxLayoutItem
+      Parent = dxLayoutControl1Group3
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'Item:'
+      Control = dbEquipos
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutControl1Item4: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahLeft
+      CaptionOptions.Text = 'Estado del Producto:'
+      Control = cxStatusRecepcion
+      ControlOptions.ShowBorder = False
+      Index = 3
+    end
+    object dxLayoutControl1Item5: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahLeft
+      CaptionOptions.Text = 'Cantidad:'
+      Padding.Bottom = 20
+      Padding.AssignedValues = [lpavBottom]
+      Control = cxCantidad
+      ControlOptions.ShowBorder = False
+      Index = 4
+    end
+    object dxLayoutControl1Item6: TdxLayoutItem
+      Parent = dxLayoutControl1Group1
+      AlignHorz = ahClient
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = Button1
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
+    object dxLayoutControl1Item7: TdxLayoutItem
+      Parent = dxLayoutControl1Group1
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = Button2
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutControl1Group1: TdxLayoutAutoCreatedGroup
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahCenter
+      LayoutDirection = ldHorizontal
+      Index = 5
+      AutoCreated = True
+    end
+    object dxLayoutControl1Item8: TdxLayoutItem
+      Parent = dxLayoutControl1Group2
+      CaptionOptions.Text = 'cxButton1'
+      CaptionOptions.Visible = False
+      Control = btnCategoria
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutControl1Group2: TdxLayoutAutoCreatedGroup
+      Parent = dxLayoutControl1Group_Root
+      LayoutDirection = ldHorizontal
+      Index = 1
+      AutoCreated = True
+    end
+    object dxLayoutControl1Item9: TdxLayoutItem
+      Parent = dxLayoutControl1Group3
+      CaptionOptions.Text = 'cxButton2'
+      CaptionOptions.Visible = False
+      Control = btnEquipos
+      ControlOptions.ShowBorder = False
+      Index = 1
+    end
+    object dxLayoutControl1Group3: TdxLayoutAutoCreatedGroup
+      Parent = dxLayoutControl1Group_Root
+      LayoutDirection = ldHorizontal
+      Index = 2
+      AutoCreated = True
+    end
+    object dxLayoutControl1Item1: TdxLayoutItem
+      Parent = dxLayoutControl1Group_Root
+      AlignHorz = ahLeft
+      CaptionOptions.Text = 'Fecha de Recepci'#243'n:'
+      Control = cxFecha
+      ControlOptions.ShowBorder = False
+      Index = 0
+    end
   end
   object zqEquipos: TZQuery
     Connection = connection.zConnection

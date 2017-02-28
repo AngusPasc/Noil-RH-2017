@@ -7,14 +7,26 @@ uses
   Dialogs, StdCtrls, Grids, DBGrids, DB, ZAbstractRODataset, ZDataset, global,
   Buttons, RXDBCtrl, Newpanel, ZAbstractDataset, StrUtils, DBCtrls, Mask,
   ComCtrls, frxClass, frxDBSet, DateUtils, RxMemDS, rxToolEdit, frmEmpleados,
-  NxEdit, DBLabelEdit;
+  NxEdit, DBLabelEdit, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, dxLayoutContainer, dxLayoutControl, cxContainer, cxEdit,
+  dxLayoutcxEditAdapters, cxDBEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit,
+  cxCalendar, cxLabel, cxDBLabel, dxLayoutControlAdapters, Menus, cxButtons;
 
 type
   Tfrm_EquiposPorEmpleadoQuitar = class(TForm)
-  Label1: TLabel;
-    DbFechaRemocion: TDBDateEdit;
-  Button1: TButton;
-  Button2: TButton;
   zqEquipos: TZQuery;
   zqEquiposiId: TIntegerField;
   zqEquiposiId_Categoria: TIntegerField;
@@ -23,10 +35,19 @@ type
   zqEquipossModelo: TStringField;
   zqEquipossDescripcion: TStringField;
   dsEquipos: TDataSource;
-  Label2: TLabel;
-    dbEquipo: TDBLabelEdit;
-  Label3: TLabel;
-    dbEstado: TDBEdit;
+    dxLayoutControl1Group_Root: TdxLayoutGroup;
+    dxLayoutControl1: TdxLayoutControl;
+    dbEquipo: TcxDBLabel;
+    dxLayoutControl1Item1: TdxLayoutItem;
+    DbFechaRemocion: TcxDBDateEdit;
+    dxLayoutControl1Item2: TdxLayoutItem;
+    dbEstado: TcxDBTextEdit;
+    dxLayoutControl1Item3: TdxLayoutItem;
+    Button1: TcxButton;
+    dxLayoutControl1Item4: TdxLayoutItem;
+    Button2: TcxButton;
+    dxLayoutControl1Item5: TdxLayoutItem;
+    dxLayoutControl1Group1: TdxLayoutAutoCreatedGroup;
   procedure FormClose(Sender: TObject; var Action: TCloseAction);
   procedure Button1Click(Sender: TObject);
   procedure Button2Click(Sender: TObject);
