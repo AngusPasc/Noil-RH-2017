@@ -1,0 +1,71 @@
+object FrmAsistenciaSelfecha: TFrmAsistenciaSelfecha
+  Left = 0
+  Top = 0
+  Caption = 'Seleccionar Fecha'
+  ClientHeight = 117
+  ClientWidth = 363
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lbTitulo: TJvLabel
+    Left = 24
+    Top = 8
+    Width = 93
+    Height = 13
+    Caption = 'Seleccione la fecha'
+    Transparent = True
+    HotTrackFont.Charset = DEFAULT_CHARSET
+    HotTrackFont.Color = clWindowText
+    HotTrackFont.Height = -11
+    HotTrackFont.Name = 'Tahoma'
+    HotTrackFont.Style = []
+  end
+  object DtFecha: TDateTimePicker
+    Left = 24
+    Top = 30
+    Width = 321
+    Height = 21
+    Date = 41432.520687685190000000
+    Time = 41432.520687685190000000
+    TabOrder = 0
+    OnChange = DtFechaChange
+  end
+  object Seleccionar: TAdvGlowButton
+    Left = 48
+    Top = 57
+    Width = 249
+    Height = 41
+    Caption = 'Seleccionar'
+    NotesFont.Charset = DEFAULT_CHARSET
+    NotesFont.Color = clWindowText
+    NotesFont.Height = -11
+    NotesFont.Name = 'Tahoma'
+    NotesFont.Style = []
+    TabOrder = 1
+    OnClick = SeleccionarClick
+    Appearance.ColorChecked = 16111818
+    Appearance.ColorCheckedTo = 16367008
+    Appearance.ColorDisabled = 15921906
+    Appearance.ColorDisabledTo = 15921906
+    Appearance.ColorDown = 16111818
+    Appearance.ColorDownTo = 16367008
+    Appearance.ColorHot = 16117985
+    Appearance.ColorHotTo = 16372402
+    Appearance.ColorMirrorHot = 16107693
+    Appearance.ColorMirrorHotTo = 16775412
+    Appearance.ColorMirrorDown = 16102556
+    Appearance.ColorMirrorDownTo = 16768988
+    Appearance.ColorMirrorChecked = 16102556
+    Appearance.ColorMirrorCheckedTo = 16768988
+    Appearance.ColorMirrorDisabled = 11974326
+    Appearance.ColorMirrorDisabledTo = 15921906
+  end
+end

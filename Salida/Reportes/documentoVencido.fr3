@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TfrxReport Version="4.7.109" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42045.4306788657" ReportOptions.Description.Text="" ReportOptions.LastChange="42045.4659719792" ScriptLanguage="PascalScript" ScriptText.Text="&#13;&#10;begin&#13;&#10;&#13;&#10;end." PropData="044C65667403C00103546F7003F80008446174617365747301010C4400000020446174615365743D226672784442446F63756D656E746F56656E6369646F2220446174615365744E616D653D226672784442446F63756D656E746F56656E6369646F220000095661726961626C65730100055374796C650100">
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="215.9" PaperHeight="279.4" PaperSize="1" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
+    <TfrxReportTitle Name="ReportTitle1" Height="22.67718" Left="0" Top="18.89765" Width="740.409927"/>
+    <TfrxMasterData Name="MasterData1" Height="876.85096" Left="0" Top="102.04731" Width="740.409927" ColumnWidth="0" ColumnGap="0" DataSet="frxDBDocumentoVencido" DataSetName="frxDBDocumentoVencido" RowCount="0">
+      <TfrxPictureView Name="Picture1" Left="3.77953" Top="3.77953" Width="725.66976" Height="744.56741" ShowHint="False" DataField="archivo" DataSet="frxDBDocumentoVencido" DataSetName="frxDBDocumentoVencido" HightQuality="False"/>
+    </TfrxMasterData>
+  </TfrxReportPage>
+</TfrxReport>
