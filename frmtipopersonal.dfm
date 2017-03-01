@@ -3,12 +3,12 @@ object frm_tipopersonal: Tfrm_tipopersonal
   Top = 0
   Align = alBottom
   Caption = 'Tipos de Personal'
-  ClientHeight = 364
-  ClientWidth = 867
+  ClientHeight = 278
+  ClientWidth = 663
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   FormStyle = fsMDIChild
@@ -18,13 +18,15 @@ object frm_tipopersonal: Tfrm_tipopersonal
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 17
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 96
+  TextHeight = 13
   inline frmBarra1: TfrmBarra
     Left = 0
     Top = 0
-    Width = 94
-    Height = 275
+    Width = 72
+    Height = 210
     Margins.Right = 5
     VertScrollBar.Style = ssHotTrack
     Align = alLeft
@@ -32,104 +34,60 @@ object frm_tipopersonal: Tfrm_tipopersonal
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = 1
-    ExplicitWidth = 94
-    ExplicitHeight = 271
+    ExplicitWidth = 72
+    ExplicitHeight = 210
     inherited AdvPanel1: TAdvPanel
-      Width = 94
-      Height = 275
-      ExplicitWidth = 94
-      ExplicitHeight = 271
+      Width = 72
+      Height = 210
+      ExplicitWidth = 72
+      ExplicitHeight = 210
       FullHeight = 0
       inherited btnEdit: TcxButton
-        Left = 5
-        Top = 34
-        Width = 88
-        Height = 33
+        Top = 26
+        Font.Height = -9
         OnClick = frmBarra1btnEditClick
-        ExplicitLeft = 5
-        ExplicitTop = 34
-        ExplicitWidth = 88
-        ExplicitHeight = 33
+        ExplicitTop = 26
       end
       inherited btnPost: TcxButton
-        Left = 5
-        Top = 67
-        Width = 88
-        Height = 32
+        Top = 51
+        Font.Height = -9
         OnClick = frmBarra1btnPostClick
-        ExplicitLeft = 5
-        ExplicitTop = 67
-        ExplicitWidth = 88
-        ExplicitHeight = 32
+        ExplicitTop = 51
       end
       inherited btnCancel: TcxButton
-        Left = 5
-        Top = 99
-        Width = 88
-        Height = 33
+        Font.Height = -9
         OnClick = frmBarra1btnCancelClick
-        ExplicitLeft = 5
-        ExplicitTop = 99
-        ExplicitWidth = 88
-        ExplicitHeight = 33
       end
       inherited btnDelete: TcxButton
-        Left = 5
-        Top = 132
-        Width = 88
-        Height = 33
+        Top = 101
+        Font.Height = -9
         OnClick = frmBarra1btnDeleteClick
-        ExplicitLeft = 5
-        ExplicitTop = 132
-        ExplicitWidth = 88
-        ExplicitHeight = 33
+        ExplicitTop = 101
       end
       inherited btnPrinter: TcxButton
-        Left = 5
-        Top = 165
-        Width = 88
-        Height = 32
-        ExplicitLeft = 5
-        ExplicitTop = 165
-        ExplicitWidth = 88
-        ExplicitHeight = 32
+        Top = 126
+        Font.Height = -9
+        ExplicitTop = 126
       end
       inherited btnRefresh: TcxButton
-        Left = 5
-        Top = 197
-        Width = 88
-        Height = 33
+        Top = 151
         Hint = 'refresh'
+        Font.Height = -9
         OnClick = frmBarra1btnRefreshClick
-        ExplicitLeft = 5
-        ExplicitTop = 197
-        ExplicitWidth = 88
-        ExplicitHeight = 33
+        ExplicitTop = 151
       end
       inherited btnExit: TcxButton
-        Left = 5
-        Top = 230
-        Width = 88
-        Height = 33
+        Top = 176
         Hint = 'salir'
+        Font.Height = -9
         OnClick = frmBarra1btnExitClick
-        ExplicitLeft = 5
-        ExplicitTop = 230
-        ExplicitWidth = 88
-        ExplicitHeight = 33
+        ExplicitTop = 176
       end
       inherited btnAdd: TcxButton
-        Left = 5
         Top = 1
-        Width = 88
-        Height = 33
+        Font.Height = -9
         OnClick = frmBarra1btnAddClick
-        ExplicitLeft = 5
         ExplicitTop = 1
-        ExplicitWidth = 88
-        ExplicitHeight = 33
       end
     end
     inherited IconosBarra: TcxImageList
@@ -144,7 +102,7 @@ object frm_tipopersonal: Tfrm_tipopersonal
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C010108000900340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C0101080009003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
@@ -549,18 +507,14 @@ object frm_tipopersonal: Tfrm_tipopersonal
     end
   end
   object grid_tipopersonal: TcxGrid
-    Left = 94
+    Left = 72
     Top = 0
-    Width = 773
-    Height = 275
+    Width = 591
+    Height = 210
     Align = alClient
     PopupMenu = pm1
-    TabOrder = 5
+    TabOrder = 3
     LookAndFeel.NativeStyle = False
-    ExplicitLeft = 129
-    ExplicitTop = 8
-    ExplicitWidth = 722
-    ExplicitHeight = 249
     object cxgrdbtblvwBView_tipopersonal: TcxGridDBTableView
       PopupMenu = pm1
       Navigator.Buttons.CustomButtons = <>
@@ -605,51 +559,50 @@ object frm_tipopersonal: Tfrm_tipopersonal
   end
   object pnl1: TPanel
     Left = 0
-    Top = 275
-    Width = 867
-    Height = 89
+    Top = 210
+    Width = 663
+    Height = 68
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 281
     DesignSize = (
-      867
-      89)
+      663
+      68)
     object cxLabel1: TcxLabel
-      Left = 10
-      Top = 23
+      Left = 8
+      Top = 18
       Anchors = [akLeft, akBottom]
       Caption = '&ID'
       FocusControl = dbIdTipo
       ParentFont = False
     end
     object cxLabel2: TcxLabel
-      Left = 10
-      Top = 58
+      Left = 8
+      Top = 44
       Anchors = [akLeft, akBottom]
       Caption = '&Descripci'#243'n'
       FocusControl = sDescripcion
       ParentFont = False
     end
     object dbIdTipo: TcxDBTextEdit
-      Left = 94
-      Top = 23
+      Left = 72
+      Top = 18
       Anchors = [akLeft, akBottom]
       DataBinding.DataField = 'iIdTipo'
       DataBinding.DataSource = dsZQTipoPersonal
       Enabled = False
       ParentFont = False
       TabOrder = 2
-      Width = 739
+      Width = 565
     end
     object sDescripcion: TcxDBTextEdit
-      Left = 90
-      Top = 54
+      Left = 69
+      Top = 41
       Anchors = [akLeft, akBottom]
       DataBinding.DataField = 'sDescripcion'
       DataBinding.DataSource = dsZQTipoPersonal
       ParentFont = False
       TabOrder = 3
-      Width = 743
+      Width = 568
     end
   end
   object ZQTipoPersonal: TZQuery

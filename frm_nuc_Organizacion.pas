@@ -25,7 +25,8 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid, Newpanel;
+  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid, Newpanel,
+  UnitGenerales;
 
 type
   Tfrm_nucOrganizacion = class(TForm)
@@ -328,7 +329,7 @@ begin
    Salir1.Enabled := False ;
    frmBarra1.btnAddClick(Sender);
    dbFecha.SetFocus;
-
+   global_movimiento := 'Insertó';
    zqOrganizacion.Append ;
    zqOrganizacion.fieldbyname('activo').asstring := 'Si';
    zqOrganizacion.fieldbyname('padre').asinteger := -5;
@@ -382,6 +383,7 @@ begin
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
            sOpcion := 'Edit';
+           global_movimiento := 'Modificó';
           // tsDescripcion.SetFocus;
            zqOrganizacion.Edit;
            grid_organizacion.Enabled := False;
@@ -399,6 +401,7 @@ procedure Tfrm_nucOrganizacion.frmBarra1btnPostClick(Sender: TObject);
 var
    lEdicion : boolean;
    indice   : integer;
+   mov      : String;
 begin
   frmBarra1.btnPostClick(Sender);
 
@@ -416,6 +419,13 @@ begin
         zqOrganizacion.FieldValues['idorganizacion'] := connection.QryBusca.FieldValues['id'] + 1;
       zqOrganizacion.FieldValues['wbs'] := zqOrganizacion.FieldValues['idorganizacion'];
       zqOrganizacion.Post ;
+
+      if global_movimiento = 'Insertó' then
+        mov:= 'Se realizó la inserción de la organización No. [' + zqOrganizacion.FieldByName('codigoorganizacion').AsString + ']'
+      else if global_movimiento = 'Modificó' then
+        mov:= 'Se realizó la modificación de la organización No. [' + zqOrganizacion.FieldByName('codigoorganizacion').AsString + ']';
+
+      kardex_almacen(mov, global_movimiento);
 
       zqOrganizacion.Last;
       {Buscamos el maximo elemento..}
@@ -475,7 +485,7 @@ begin
 
    frmBarra1.btnCancelClick(Sender);
    zqOrganizacion.Cancel;
-
+   global_movimiento := '';
    desactivapop(popupprincipal);
    BotonPermiso.permisosBotones(frmBarra1);
    frmbarra1.btnPrinter.Enabled := False;
@@ -484,15 +494,21 @@ begin
 end;
 
 procedure Tfrm_nucOrganizacion.frmBarra1btnDeleteClick(Sender: TObject);
+var mov:String;
 begin
   If zqOrganizacion.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
      try
-         zqOrganizacion.Edit;
-         zqOrganizacion.FieldValues['activo'] := 'No';
-         zqOrganizacion.post;
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la organización No. [' + zqOrganizacion.FieldByName('codigoorganizacion').AsString + ']';
+
+        zqOrganizacion.Edit;
+        zqOrganizacion.FieldValues['activo'] := 'No';
+        zqOrganizacion.post;
+
+        kardex_almacen(mov, global_movimiento);
 
          connection.zCommand.Active := False;
          connection.zCommand.SQL.Clear;

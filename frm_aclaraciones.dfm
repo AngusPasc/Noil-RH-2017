@@ -2,12 +2,12 @@ object frmaclaraciones: Tfrmaclaraciones
   Left = 0
   Top = 0
   Caption = 'Catalago Aclaraciones'
-  ClientHeight = 615
-  ClientWidth = 1159
+  ClientHeight = 461
+  ClientWidth = 869
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -10
   Font.Name = 'Tahoma'
   Font.Style = []
   FormStyle = fsMDIChild
@@ -16,25 +16,22 @@ object frmaclaraciones: Tfrmaclaraciones
   Visible = True
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 12
   object grid_aclaraciones: TcxGrid
-    Left = 84
+    Left = 63
     Top = 0
-    Width = 1075
-    Height = 350
+    Width = 806
+    Height = 263
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
     PopupMenu = popupPrincipal
     TabOrder = 0
-    ExplicitLeft = 392
-    ExplicitWidth = 901
-    ExplicitHeight = 513
     object cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsaclaraciones
@@ -69,188 +66,211 @@ object frmaclaraciones: Tfrmaclaraciones
   end
   object pnl1: TPanel
     Left = 0
-    Top = 350
-    Width = 1159
-    Height = 265
+    Top = 263
+    Width = 869
+    Height = 198
     Align = alBottom
     PopupMenu = popupPrincipal
     TabOrder = 1
-    ExplicitTop = 513
-    ExplicitWidth = 1293
     object cxLabel1: TcxLabel
-      Left = 12
-      Top = 16
+      Left = 9
+      Top = 12
       Caption = 'Id Aclaracion'
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
     end
     object cxLabel2: TcxLabel
-      Left = 12
-      Top = 48
+      Left = 9
+      Top = 36
       Caption = 'Descripcion'
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
     end
     object cxLabel3: TcxLabel
-      Left = 12
-      Top = 78
+      Left = 9
+      Top = 59
       Caption = 'Comentarios'
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
     end
     object eaclaracion: TcxDBTextEdit
-      Left = 104
-      Top = 16
+      Left = 78
+      Top = 12
       DataBinding.DataField = 'idAclaracion'
       DataBinding.DataSource = dsaclaraciones
       ParentFont = False
       Style.Color = 16776176
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 3
       OnKeyPress = eaclaracionKeyPress
-      Width = 1009
+      Width = 757
     end
     object edescripcion: TcxDBTextEdit
-      Left = 104
-      Top = 47
+      Left = 78
+      Top = 35
       DataBinding.DataField = 'sDescripcion'
       DataBinding.DataSource = dsaclaraciones
       ParentFont = False
       Style.Color = 16776176
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 4
       OnKeyPress = edescripcionKeyPress
-      Width = 1009
+      Width = 757
     end
     object memocomentarios: TcxDBMemo
-      Left = 104
-      Top = 88
+      Left = 78
+      Top = 66
       DataBinding.DataField = 'sComentario'
       DataBinding.DataSource = dsaclaraciones
       ParentFont = False
       Style.Color = 16776176
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -11
       Style.Font.Name = 'Arial'
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 5
-      Height = 169
-      Width = 1009
+      Height = 127
+      Width = 757
     end
   end
   inline frmbarra1: TfrmBarra
     Left = 0
     Top = 0
-    Width = 84
-    Height = 350
+    Width = 63
+    Height = 263
     Margins.Right = 5
     VertScrollBar.Style = ssHotTrack
     Align = alLeft
     TabOrder = 2
-    ExplicitWidth = 84
-    ExplicitHeight = 513
+    ExplicitWidth = 63
+    ExplicitHeight = 263
     inherited AdvPanel1: TAdvPanel
-      Width = 84
-      Height = 350
-      ExplicitTop = -6
-      ExplicitWidth = 113
-      ExplicitHeight = 513
+      Width = 63
+      Height = 263
+      ExplicitWidth = 63
+      ExplicitHeight = 263
       FullHeight = 0
       inherited btnEdit: TcxButton
-        Top = 38
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 29
+        Width = 57
+        Height = 21
+        Font.Height = -9
         OnClick = btnEditClick
-        ExplicitTop = 38
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 29
+        ExplicitWidth = 57
+        ExplicitHeight = 21
       end
       inherited btnPost: TcxButton
-        Top = 67
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 50
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnPostClick
-        ExplicitTop = 67
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 50
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnCancel: TcxButton
-        Top = 96
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 72
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnCancelClick
-        ExplicitTop = 96
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 72
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnDelete: TcxButton
-        Top = 125
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 94
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnDeleteClick
-        ExplicitTop = 125
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 94
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnPrinter: TcxButton
-        Top = 153
-        Width = 76
-        Height = 29
-        ExplicitTop = 153
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        Left = 3
+        Top = 115
+        Width = 57
+        Height = 22
+        Font.Height = -9
+        ExplicitLeft = 3
+        ExplicitTop = 115
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnRefresh: TcxButton
-        Top = 181
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 136
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnRefreshClick
-        ExplicitTop = 181
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 136
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnExit: TcxButton
-        Top = 209
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 157
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnExitClick
-        ExplicitTop = 209
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 157
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
       inherited btnAdd: TcxButton
-        Width = 76
-        Height = 29
+        Left = 3
+        Top = 7
+        Width = 57
+        Height = 22
+        Font.Height = -9
         OnClick = btnAddClick
-        ExplicitWidth = 76
-        ExplicitHeight = 29
+        ExplicitLeft = 3
+        ExplicitTop = 7
+        ExplicitWidth = 57
+        ExplicitHeight = 22
       end
     end
     inherited IconosBarra: TcxImageList
@@ -265,7 +285,7 @@ object frmaclaraciones: Tfrmaclaraciones
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C010108000900300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C010108000900340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

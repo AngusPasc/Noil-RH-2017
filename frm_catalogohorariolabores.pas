@@ -24,7 +24,7 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, UnitGenerales;
 
 type
   TfrmCatalogoHorarioLabores = class(TForm)
@@ -151,6 +151,7 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
+   global_movimiento := 'Insertó';
    qryHorarios.Append ;
    qryHorarios.FieldValues['sDescripcion'] := '';
    tsDescripcion.SetFocus;
@@ -173,6 +174,7 @@ begin
            Eliminar1.Enabled := False ;
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
+           global_movimiento := 'Modificó';
            sOpcion := 'Edit';
            tsDescripcion.SetFocus;
            qryHorarios.Edit;
@@ -190,6 +192,7 @@ end;
 procedure TfrmCatalogoHorarioLabores.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov : String;
 begin
 
     try
@@ -212,6 +215,13 @@ begin
                qryHorarios.FieldValues['iIdHorario'] := connection.QryBusca.FieldValues['id'] + 1;
           end;
           qryHorarios.Post ;
+          if global_movimiento = 'Insertó' then
+              mov:= 'Se realizó la inserción del Horario de Labores No. [' + qryHorarios.FieldByName('iIdhorario').AsString + ']'
+          else if global_movimiento = 'Modificó' then
+              mov:= 'Se realizó la modificación del Horario de Labores No. [' + qryHorarios.FieldByName('iIdhorario').AsString + ']';
+
+          kardex_almacen(mov, global_movimiento);
+
           Insertar1.Enabled  := True ;
           Editar1.Enabled    := True ;
           Registrar1.Enabled := False ;
@@ -242,16 +252,22 @@ begin
    frmbarra1.btnPrinter.Enabled := False;
    grid_estatus.Enabled := True;
    sOpcion := '';
+   global_movimiento := '';
 end;
 
 procedure TfrmCatalogoHorarioLabores.frmBarra1btnDeleteClick(Sender: TObject);
+var mov :String;
 begin
   If qryHorarios.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
      try
-         qryHorarios.Delete;
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Horario de Labores No. [' + qryHorarios.FieldByName('iIdhorario').AsString + ']';
+        qryHorarios.Delete;
+
+        kardex_almacen(mov, global_movimiento);
       except
          on e : exception do begin
            UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Horario de Labores', 'Al eliminar registro', 0);

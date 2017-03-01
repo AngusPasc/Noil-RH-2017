@@ -23,7 +23,7 @@ uses
   cxDBData, cxMemo, ExtCtrls, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxLabel,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, frxClass,Menus, frxDBSet,global, frm_barra,UnitExcepciones,
-  cxDBEdit,CxGridExportLink, ShellApi;
+  cxDBEdit,CxGridExportLink, ShellApi,UnitGenerales;
 
 type
   Tfrmaclaraciones = class(TForm)
@@ -92,7 +92,7 @@ type
 
 var
   frmaclaraciones: Tfrmaclaraciones;
- 
+
 
 implementation
 
@@ -105,6 +105,7 @@ procedure Tfrmaclaraciones.btnAddClick(Sender: TObject);
 begin
   frmbarra1.btnAddClick(sender);
   limpiarcajas;
+  global_movimiento := 'Insertó';
   eaclaracion.SetFocus;
   zaclaraciones.Append;
 end;
@@ -112,9 +113,11 @@ end;
 procedure Tfrmaclaraciones.btnCancelClick(Sender: TObject);
 begin
   frmBarra1.btnCancelClick(Sender);
+  global_movimiento := '';
 end;
 
 procedure Tfrmaclaraciones.btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
  // zaclaraciones.Delete;
 
@@ -123,7 +126,10 @@ begin
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Aclaración No. [' + zaclaraciones.FieldByName('').AsString + ']';
         zaclaraciones.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
         on e : exception do begin
          UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Aclaraciones', 'Al eliminar registro', 0);
@@ -134,8 +140,9 @@ end;
 
 procedure Tfrmaclaraciones.btnEditClick(Sender: TObject);
 begin
-   zaclaraciones.Edit;
-   frmBarra1.btnEditClick(Sender);
+    global_movimiento := 'Modificó';
+    zaclaraciones.Edit;
+    frmBarra1.btnEditClick(Sender);
 end;
 
 procedure Tfrmaclaraciones.btnExitClick(Sender: TObject);
@@ -145,8 +152,15 @@ begin
 end;
 
 procedure Tfrmaclaraciones.btnPostClick(Sender: TObject);
+var mov:String;
 begin
    zaclaraciones.Post;
+   if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción de la Aclaración No. [' + zaclaraciones.FieldByName('').AsString + ']'
+   else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Aclaración No. [' + zaclaraciones.FieldByName('').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
    frmBarra1.btnPostClick(Sender);
 end;
 

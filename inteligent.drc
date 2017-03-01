@@ -6095,19 +6095,19 @@ END
 /* C:\Program Files (x86)\DevExpress VCL\ExpressSkins Library\Sources\dxSkinBlueprint.res */
 /* C:\Program Files (x86)\DevExpress VCL\ExpressSkins Library\Sources\dxSkinBlue.res */
 /* C:\Program Files (x86)\DevExpress VCL\ExpressSkins Library\Sources\dxSkinBlack.res */
+/* C:\Users\Developer\Documents\tmssoftware\TMS Component Pack\ADVGLOWBUTTONDB.RES */
+/* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\Next Collection\NxCollectionRes.res */
+/* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\Next Collection\NxExpandPanel.res */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_zinc_parametros.dfm */
 /* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\NxCommonRes.res */
 /* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\NxEditRes.res */
 /* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\Next Grid\NxGridRes.res */
-/* frm_zinc_parametros.dfm */
-/* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\Next Collection\NxCollectionRes.res */
-/* C:\Componentes delphi 2007\Berg Components Suite v5.9.10.1\Sources\Next Collection\NxExpandPanel.res */
 /* frm_Zinc_mensaje.dfm */
-/* frm_Zinc_editarConexiones.dfm */
 /* frm_Zinc_erroresDB.dfm */
-/* C:\Users\Developer\Documents\tmssoftware\TMS Component Pack\ADVGLOWBUTTONDB.RES */
+/* frm_Zinc_editarConexiones.dfm */
 /* frm_Zinc_agregarConexion.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_Zincroligent.dfm */
 /* frm_Zinc_erroresTabla.dfm */
-/* frm_Zincroligent.dfm */
 /* C:\Componentes delphi 2007\Rx Library\Units\RXCtrls.R32 */
 /* C:\Componentes delphi 2007\Rx Library\Units\rxPickDate.R32 */
 /* C:\Componentes delphi 2007\Rx Library\Units\rxToolEdit.R32 */
@@ -6254,8 +6254,8 @@ END
 /* frm_turnos.dfm */
 /* frm_MovtosEmpleadosGuardias.dfm */
 /* frm_RequisiondePersonal.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frmBancos.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoestatusequipo.dfm */
+/* frmBancos.dfm */
+/* frm_catalogoestatusequipo.dfm */
 /* frmCatalogoDeCategoriasDeEquipos.dfm */
 /* frmCatalogoDeEquipos.dfm */
 /* frm_ReportesAlmacen.dfm */
@@ -6358,9 +6358,9 @@ END
 /* frm_catalogoperiodospago.dfm */
 /* frm_catalogohorariolabores.dfm */
 /* frmRegistrosPatronales.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoprofesiones.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogolocalidad_academico.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoentidadeseducativas.dfm */
+/* frm_catalogoprofesiones.dfm */
+/* frm_catalogolocalidad_academico.dfm */
+/* frm_catalogoentidadeseducativas.dfm */
 /* frmHistorialSueldos.dfm */
 /* frm_catalogoestatusempleados.dfm */
 /* frmEquiposPorEmpleadoQuitar.dfm */
@@ -6396,8 +6396,8 @@ END
 /* C:\Componentes delphi 2007\Jedi\jvcl\Resources\JvSpin.Res */
 /* UTFrmPeriodosGuardia.dfm */
 /* UTFrmGuardias.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\UTFrmEvaluarEmpleados.dfm */
 /* UTFrmEvaluacionPersonal.dfm */
+/* UTFrmEvaluarEmpleados.dfm */
 /* frmDoctosXcategoria.dfm */
 /* UTFrmDevolucionEmpProv.dfm */
 /* UTFrmIniciacionSaldo.dfm */
@@ -6451,7 +6451,7 @@ END
 /* frmNomina_Pruebas.dfm */
 /* frm_almacenesporcontrato.dfm */
 /* frm_almacenesporusuario.dfm */
-/* principal.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\principal.dfm */
 /* frmNomina_ReporteAcumulados.dfm */
 /* frmNomina_ReporteNominas.dfm */
 /* frmPrestacionesdeLey.dfm */
@@ -6491,7 +6491,7 @@ END
 /* frm_cancelacion.dfm */
 /* frm_Recursos_equipo.dfm */
 /* frm_Recursos_personal.dfm */
-/* frm_AdministrarBd.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_AdministrarBd.dfm */
 /* frm_Recursos_pernocta.dfm */
 /* frm_Recursos_movimientos.dfm */
 /* frm_estimacionAdicional.dfm */
@@ -6539,9 +6539,9 @@ END
 /* frm_DistribucionPrograma.dfm */
 /* frm_isometricos_grupo.dfm */
 /* frm_ProcRegAvFisico.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_AltaServidor.dfm */
 /* frm_WizardContrato.dfm */
-/* frm_AltaServidor.dfm */
-/* frm_acceso.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_acceso.dfm */
 /* frm_acerca.dfm */
 /* frm_seleccion2.dfm */
 /* frm_AvisosAlertas.dfm */

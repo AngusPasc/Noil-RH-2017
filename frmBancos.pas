@@ -280,6 +280,7 @@ begin
   grid_bancos.Enabled:=True;
   global_movimiento := '';
   bancos.Cancel ;
+
 end;
 
 procedure Tfrm_BancosGral.frmBarra1btnDeleteClick(Sender: TObject);

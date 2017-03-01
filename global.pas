@@ -2,10 +2,10 @@ unit global;
 interface
 uses windows, SysUtils, controls, classes, Graphics;
 const
-  IntelPass ='cleopatra';
-  IntelUser = 'root';
-//  IntelPass = 'cmmi_nomina1216';
-//  IntelUser = 'dsaisolu_cmmi_16';
+//  IntelPass ='cleopatra';
+//  IntelUser = 'root';
+  IntelPass = 'cmmi_nomina1216';
+  IntelUser = 'dsaisolu_cmmi_16';
   Global_TamOrden = 10;
   Global_SepOrden = '.';
   EsBkColor: array[1..6] of tColor = ($00FEC6BA, $00FEE7BA, $00D7FDBB, $00BAFEC9, $00BBFDF4, $00BAE1FE);

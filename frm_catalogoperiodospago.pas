@@ -24,7 +24,7 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, UnitGenerales;
 
 type
   TfrmCatalogoPeriodosPago = class(TForm)
@@ -157,6 +157,7 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
+   global_movimiento := 'Insertó';
    qryPeriodos.Append ;
    qryPeriodos.FieldValues['sDescripcion'] := '';
    tsDescripcion.SetFocus;
@@ -179,6 +180,7 @@ begin
            Eliminar1.Enabled := False ;
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
+           global_movimiento := 'Modificó';
            sOpcion := 'Edit';
            tsDescripcion.SetFocus;
            qryPeriodos.Edit;
@@ -196,6 +198,7 @@ end;
 procedure TfrmCatalogoPeriodosPago.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov :String;
 begin
 
     try
@@ -218,6 +221,14 @@ begin
                qryPeriodos.FieldValues['iIdPeriodo'] := connection.QryBusca.FieldValues['id'] + 1;
           end;
           qryPeriodos.Post ;
+
+          if global_movimiento = 'Insertó' then
+              mov:= 'Se realizó la inserción del Periodo de Pago No. [' + qryPeriodos.FieldByName('iIdPeriodo').AsString + ']'
+          else if global_movimiento = 'Modificó' then
+              mov:= 'Se realizó la modificación del Periodo de Pago No. [' + qryPeriodos.FieldByName('iIdPeriodo').AsString + ']';
+
+          kardex_almacen(mov, global_movimiento);
+
           Insertar1.Enabled  := True ;
           Editar1.Enabled    := True ;
           Registrar1.Enabled := False ;
@@ -242,7 +253,7 @@ begin
 
    frmBarra1.btnCancelClick(Sender);
    qryPeriodos.Cancel;
-
+   global_movimiento := '';
    desactivapop(popupprincipal);
    BotonPermiso.permisosBotones(frmBarra1);
    frmbarra1.btnPrinter.Enabled := False;
@@ -251,13 +262,19 @@ begin
 end;
 
 procedure TfrmCatalogoPeriodosPago.frmBarra1btnDeleteClick(Sender: TObject);
+var mov :String;
 begin
   If qryPeriodos.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
      try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Periodo de Pago No. [' + qryPeriodos.FieldByName('iIdPeriodo').AsString + ']';
+
          qryPeriodos.Delete;
+
+         kardex_almacen(mov, global_movimiento);
       except
          on e : exception do begin
            UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Periodos de Pago', 'Al eliminar registro', 0);

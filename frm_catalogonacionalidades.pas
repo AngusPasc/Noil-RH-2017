@@ -24,7 +24,7 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, UnitGenerales;
 
 type
   TfrmCatalogoNacionalidades = class(TForm)
@@ -184,6 +184,7 @@ begin
   Eliminar1.Enabled   := False;
   Refresh1.Enabled    := False;
   Salir1.Enabled      := False;
+  global_movimiento := 'Insertó';
   qryNacionalidad.Append;
   qryNacionalidad.FieldValues['sDescripcion'] := '';
   tsPais.SetFocus;
@@ -207,6 +208,7 @@ begin
       Refresh1.Enabled  := False;
       Salir1.Enabled    := False;
       sOpcion := 'Edit';
+      global_movimiento := 'Modificó';
       tsPais.SetFocus;
       qryNacionalidad.Edit;
       grid_estatus.Enabled := False;
@@ -223,6 +225,7 @@ end;
 procedure TfrmCatalogoNacionalidades.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov :String;
 begin
   try
     frmBarra1.btnPostClick(Sender);
@@ -247,6 +250,14 @@ begin
       end;
     end;
     qryNacionalidad.Post ;
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción de la Nacionalidad No. [' + qryNacionalidad.FieldByName('iIdNacionalidad').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Nacionalidad No. [' + qryNacionalidad.FieldByName('iIdNacionalidad').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
     Insertar1.Enabled  :=  True;
     Editar1.Enabled    :=  True;
     Registrar1.Enabled := False;
@@ -273,7 +284,7 @@ begin
   sOpcion := '';
   frmBarra1.btnCancelClick(Sender);
   qryNacionalidad.Cancel;
-
+  global_movimiento := '';
   desactivapop(popupprincipal);
   BotonPermiso.permisosBotones(frmBarra1);
   frmbarra1.btnPrinter.Enabled := False;
@@ -282,13 +293,17 @@ begin
 end;
 
 procedure TfrmCatalogoNacionalidades.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If qryNacionalidad.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Nacionalidad No. [' + qryNacionalidad.FieldByName('iIdNacionalidad').AsString + ']';
         qryNacionalidad.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
         on e : exception do begin
          UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Nacionalidades', 'Al eliminar registro', 0);

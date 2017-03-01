@@ -24,7 +24,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, dxSkinsdxBarPainter;
+  dxSkinscxPCPainter, dxSkinsdxBarPainter, global, UnitGenerales;
 
 type
   Tfrm_tipopersonal = class(TdxRibbonForm)
@@ -100,6 +100,7 @@ procedure Tfrm_tipopersonal.frmBarra1btnAddClick(Sender: TObject);
 begin
   frmBarra1.btnAddClick(Sender);
   cambio_stado;
+  global_movimiento := 'Insertó';
   connection.QryBusca.Active := False;
   connection.QryBusca.SQL.Clear;
   connection.QryBusca.SQL.Add('SELECT MAX(iIdTipo) as id FROM tipo_personal;');
@@ -115,16 +116,24 @@ procedure Tfrm_tipopersonal.frmBarra1btnCancelClick(Sender: TObject);
 begin
   frmBarra1.btnCancelClick(Sender);
   ZQTipoPersonal.Cancel;
+  global_movimiento := '';
   cambio_stado;
 end;
 
 procedure Tfrm_tipopersonal.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   if ZQTipoPersonal.RecordCount>0 then
   begin
     if MSG_YN('Desea eliminar el Registro Activo?') then
     begin
+      global_movimiento := 'Eliminó';
+      mov:= 'Se realizó la eliminación del Tipo de Personal No. [' + ZQTipoPersonal.FieldByName('iIdTipo').AsString + ']';
+
       ZQTipoPersonal.Delete;
+
+      kardex_almacen(mov, global_movimiento);
+
       MSG_OK('El registro fue eliminado exitosamente');
     end ;
   end else msg_er('No hay registros para eliminar');
@@ -135,6 +144,7 @@ begin
   if ZQTipoPersonal.RecordCount>0 then
   begin
     frmBarra1.btnEditClick(Sender);
+    global_movimiento := 'Modificó';
     ZQTipoPersonal.Edit;
     cambio_stado;
   end else msg_er('No hay registros que editar');
@@ -147,7 +157,7 @@ begin
 end;
 
 procedure Tfrm_tipopersonal.frmBarra1btnPostClick(Sender: TObject);
-var mensaje : string;
+var mensaje, mov : string;
 begin
   frmBarra1.btnPostClick(Sender);
   if sDescripcion.Text = '' then
@@ -160,6 +170,14 @@ begin
   else if ZQTipoPersonal.State in [dsedit] then
     mensaje:= 'Registro actualizado con éxito';
   ZQTipoPersonal.Post;
+
+  if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Tipo de Personal No. [' + ZQTipoPersonal.FieldByName('iIdTipo').AsString + ']'
+  else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación del Tipo de Personal No. [' + ZQTipoPersonal.FieldByName('iIdTipo').AsString + ']';
+
+  kardex_almacen(mov, global_movimiento);
+
   cambio_stado;
   MSG_OK(mensaje);
 end;
