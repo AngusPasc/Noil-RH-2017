@@ -24,7 +24,7 @@ uses
   ZAbstractDataset, ZDataset, dxLayoutContainer, dxLayoutControl, cxContainer,
   dxLayoutcxEditAdapters, cxDBEdit, cxDropDownEdit, cxCalendar, cxCurrencyEdit,
   cxTextEdit, cxMaskEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
-  dxLayoutControlAdapters, Menus, StdCtrls, cxButtons, cxLabel;
+  dxLayoutControlAdapters, Menus, StdCtrls, cxButtons, cxLabel, global, UnitGenerales;
 
 type
  tOrganizacion = class
@@ -119,6 +119,7 @@ implementation
 procedure TFrmCatalogoSalarios.btnAddClick(Sender: TObject);
 begin
   try
+    global_movimiento := 'Insertó';
     Controles((TOrganizacion(CxTabOrganizacion.Tabs.Objects[cxTabOrganizacion.TabIndex]).Id = -1));
     if (TOrganizacion(CxTabOrganizacion.Tabs.Objects[cxTabOrganizacion.TabIndex]).Id = -1) then
     begin
@@ -145,15 +146,19 @@ begin
 end;
 
 procedure TFrmCatalogoSalarios.btnDeleteClick(Sender: TObject);
+var mov:String;
 begin
   if MessageDlg('¿Estás seguro que deseas eliminar el salario [' + zSalarios.FieldByName('TituloSalario').asString + ']', mtConfirmation, [mbyes, mbNo], 0) = mrYes then
   begin
     zUptSalario.Close;
     zUptSalario.ParamByName('IdSalario').asInteger :=  zSalarios.FieldByName('IdSalario').AsInteger;
     zUptSalario.Open;
+    global_movimiento := 'Eliminó';
+    mov:= 'Se realizó la eliminación del Salario No. [' + zUptSalario.FieldByName('IdSalario').AsString + ']';
     zUptSalario.Edit;
     zUptSalario.FieldbyName('Activo').AsString := 'No';
     zUptSalario.Post;
+    kardex_almacen(mov, global_movimiento);
     btnRefreshClick(nil);
   end;
 end;
@@ -206,12 +211,13 @@ end;
 
 procedure TFrmCatalogoSalarios.cxbtnCancelClick(Sender: TObject);
 begin
+  global_movimiento := ''; 
   Resultado := mrCancel;
 end;
 
 procedure TFrmCatalogoSalarios.cxbtnGuardarClick(Sender: TObject);
 var
-  StrMsj: String;
+  StrMsj, mov: String;
 begin
   if zUptSalario.state in [dsInsert, dsEdit] then
   begin
@@ -252,7 +258,14 @@ begin
 
       zUptSalario.FieldByName('FechaModificacion').asDateTime := Now;
       zUptSalario.Post;
-      
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Departamento No. [' + zUptSalario.FieldByName('IdSalario').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación del Departamento No. [' + zUptSalario.FieldByName('IdSalario').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
       MessageDlg(strMsj, mtInformation, [mbOK], 0);
       Resultado := Mrok;
       gForm.Close;
@@ -376,6 +389,7 @@ end;
 procedure TFrmCatalogoSalarios.frmBarra1btnEditClick(Sender: TObject);
 begin
   try
+    global_movimiento := 'Modificó';
     Controles((TOrganizacion(CxTabOrganizacion.Tabs.Objects[cxTabOrganizacion.TabIndex]).Id = -1));
     Resultado := mrCancel;
     zUptSalario.Close;

@@ -171,7 +171,7 @@ type
     procedure dblkcbbidorganizacionExit(Sender: TObject);
 
   private
-    { Private declarations }     
+    { Private declarations }
     CopiaContrato:string;
   public
     { Public declarations }
@@ -207,7 +207,7 @@ begin
   Refresh1.Enabled := False;
   Salir1.Enabled := False;
   OpcButton := 'New';
-
+  global_movimiento := 'Insertó';
   contratos.Append;
   if CopiaContrato<>'' then
   begin
@@ -277,6 +277,7 @@ begin
   Refresh1.Enabled := False;
   Salir1.Enabled := False;
   OpcButton := 'Edit';
+  global_movimiento := 'Modificó';
   try
     //activapop(frmContratos, popupprincipal);
     contratos.Edit;
@@ -303,6 +304,7 @@ var
   BlobField,Campo: tField;
   cadena,CadCampos,CadValues: string;
   i:Integer;
+  mov : String;
 begin
 
   CadCampos:='';
@@ -626,9 +628,9 @@ begin
         connection.zCommand.Params.ParamByName('orden').value := 5;
         connection.zCommand.ExecSQL;
 
-        kardex_almacen('Crea Proyecto No. [' + contratos.FieldByName('sContrato').AsString + ']', 'Otros Movimientos');
+        kardex_almacen('Se realizó la creación del proyecto No. [ '+ contratos.FieldByName('sContrato').AsString + ' ]', global_movimiento);
 
-          MessageDlg('Los Datos se Guardaron Correctamente !', mtInformation, [mbOk], 0);
+        MessageDlg('Los Datos se Guardaron Correctamente !', mtInformation, [mbOk], 0);
       end
       else
       begin
@@ -639,8 +641,12 @@ begin
     else
     begin
           {Verificamos si aplica la modificacion de contratos}
-      if ContratoActual <> ContratoAnterior then
+      //if ContratoActual <> ContratoAnterior then
              //ActualizaContrato;
+      if global_movimiento = 'Modificó' then
+        kardex_almacen('Se realizó la modificación del proyecto No. [ '+ contratos.FieldByName('sContrato').AsString + ' ]', global_movimiento);
+
+        MessageDlg('Los Datos se Guardaron Correctamente !', mtInformation, [mbOk], 0);
     end;
     Insertar1.Enabled := True;
     Editar1.Enabled := True;
@@ -741,7 +747,10 @@ begin
 end;
 
 procedure TfrmContratos.frmBarra1btnDeleteClick(Sender: TObject);
+var contrato : String;
 begin
+global_movimiento := 'Eliminó';
+contrato := contratos.FieldByName('sContrato').AsString;
   if contratos.RecordCount > 0 then
       if MessageDlg('Desea eliminar la información contenida en el proyecto '+contratos.FieldByName('sContrato').AsString+' ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
@@ -749,7 +758,7 @@ begin
              MessageDlg('No se puede eliminar el Poryecto actual, notifique al administrador del sistema.', mtInformation, [mbOk], 0)
           else
           begin
-              kardex_almacen('Elimina Proyecto No. [' + contratos.FieldByName('sContrato').AsString + ']', 'Otros Movimientos');
+              kardex_almacen('Se realizó la eliminación del Proyecto No. [' + contrato + ']', global_movimiento);
               BarraMostrar(True,progreso, LabelProceso);
               {procedure BuscaElimina_datos(sParamTabla, sLlevaContrato, sLlevaFolio, sLlevaWbs, sLLevaAct, sParamContrato, sParamFolio, sParamWbs, sParamAct, sParamNuevoContrato, sParamNuevoFolio, sParamNuevaWbs, sParamNuevaAct : string; accion :string);}
               BuscaElimina_datos(1,'contratos', 'sContrato', '', '', '', contratos.FieldByName('sContrato').AsString, '', '', '', '', '', '', '', 'borrar', False, progreso);
@@ -1239,7 +1248,7 @@ begin
   if Key = #13 then
     begin
       if global_cambioletrero = 20 then
-         tsIdResidencia.SetFocus 
+         tsIdResidencia.SetFocus
       else
          tstipoobra.SetFocus   ;
     end;

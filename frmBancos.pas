@@ -30,7 +30,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, dxSkinsdxBarPainter, frxClass, frxDBSet, ExtDlgs, jpeg,
-  cxCheckBox, cxGroupBox;
+  cxCheckBox, cxGroupBox, UnitGenerales;
 
 type
   Tfrm_BancosGral = class(TForm)
@@ -258,6 +258,7 @@ procedure Tfrm_BancosGral.frmBarra1btnAddClick(Sender: TObject);
 begin
   bImagen.Picture := Nil ;
   OpenPicture.FileName := '' ;
+  global_movimiento := 'Insertó';
   tsIdBanco.SetFocus ;
   //BotonPermiso.permisosBotones(frmBarra1);
   grid_bancos.Enabled:=False;
@@ -277,20 +278,25 @@ begin
   //desactivapop(popupprincipal);
   frmBarra1.btnCancelClick(Sender);
   grid_bancos.Enabled:=True;
+  global_movimiento := '';
   bancos.Cancel ;
 end;
 
 procedure Tfrm_BancosGral.frmBarra1btnDeleteClick(Sender: TObject);
+var mov:String;
 begin
   If bancos.RecordCount  > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Banco No. [' + bancos.FieldByName('IdBanco').AsString + ']';
         connection.zCommand.Sql.Clear ;
         connection.zcommand.SQL.Text := 'Update con_bancos Set activo="No" Where idBanco =:IdBanco' ;
         connection.zCommand.Params.ParamByName('IdBanco').Value := bancos.FieldByName('idBanco').asString ;
         connection.zCommand.ExecSQL ;
+        kardex_almacen(mov, global_movimiento);
         bancos.Refresh ;
       except
         on e : exception do
@@ -305,9 +311,11 @@ procedure Tfrm_BancosGral.frmBarra1btnEditClick(Sender: TObject);
 begin
   frmBarra1.btnEditClick(Sender);
   grid_bancos.Enabled:=False;
+
   if Bancos.recordcount > 0 then
   begin
     try
+      global_movimiento := 'Modificó';
       //activapop(frmBancos, popupprincipal);
       Bancos.Edit ;
     except
@@ -334,6 +342,7 @@ Var
   BlobField : tField ;
   nombres, cadenas: TStringList;
   image : Integer;
+  mov : String;
 begin
   {Validacion de campos}
   nombres:=TStringList.Create;cadenas:=TStringList.Create;
@@ -394,6 +403,14 @@ begin
     begin
       //Activos.FieldValues['bImagen'] := Null;
       bancos.post ;
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Banco No. [' + bancos.FieldByName('IdBanco').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación del Banco No. [' + bancos.FieldByName('IdBanco').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
       closeFormulario;
       grid_bancos.Enabled:=True;
       frmBarra1.btnPostClick(Sender);

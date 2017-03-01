@@ -118,7 +118,7 @@ object FrmCatalogoCargos: TFrmCatalogoCargos
       end
       inherited ImgBtns: TImageList
         Bitmap = {
-          494C010108000900900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C010108000900940010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -772,11 +772,12 @@ object FrmCatalogoCargos: TFrmCatalogoCargos
     object TituloProgreso: TLabel
       Left = 1
       Top = 1
-      Width = 68
+      Width = 314
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = 'Procesando...'
+      ExplicitWidth = 68
     end
     object Progreso: TProgressBar
       Left = 15

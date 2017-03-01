@@ -25,7 +25,7 @@ uses
   cxControls, cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxNavigator, cxDBData, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGrid;
+  cxGrid, UnitGenerales;
 
 type
   TfrmCatalogolocalidad_academico = class(TForm)
@@ -237,6 +237,8 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
+   global_movimiento := 'Insertó';
+
    qryLocalidad.insert;
    qryLocalidad.FieldValues['sDescripcion'] := '';
    tsDescripcion.SetFocus;
@@ -265,6 +267,7 @@ begin
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
            sOpcion := 'Edit';
+           global_movimiento := 'Modificó';
            tsDescripcion.SetFocus;
            qryLocalidad.Edit;
            grid_localidades.Enabled := False;
@@ -280,6 +283,7 @@ procedure TfrmCatalogolocalidad_academico.frmBarra1btnPostClick(Sender: TObject)
 var
   lEdicion : boolean;
   Cursor: tCursor;
+  mov :String;
 begin
   try
     Cursor := Screen.Cursor;
@@ -302,6 +306,15 @@ begin
           qryLocalidad.FieldValues['id_Localidad'] := connection.QryBusca.FieldByName('id').AsInteger + 1;
 
         qryLocalidad.Post;
+
+        if global_movimiento = 'Insertó' then
+            mov:= 'Se realizó la inserción de la Localidad Educativa No. [' + qryLocalidad.FieldByName('id_Localidad').AsString + ']'
+        else if global_movimiento = 'Modificó' then
+            mov:= 'Se realizó la modificación de la Localidad Educativa No. [' + qryLocalidad.FieldByName('id_Localidad').AsString + ']';
+
+        kardex_almacen(mov, global_movimiento);
+
+
       end
       else
         MessageDlg('La descripcion debe tener un valor!', mtInformation, [mbOk], 0);
@@ -347,6 +360,7 @@ begin
    frmBarra1.btnCancelClick(Sender);
    qryLocalidad.Cancel;
    ZQ_Municipios.Filtered := False;
+   global_movimiento := '';
 
 //   Insertar1.Enabled := True ;
 //   Editar1.Enabled := True ;
@@ -368,13 +382,17 @@ begin
 end;
 
 procedure TfrmCatalogolocalidad_academico.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If qryLocalidad.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
      try
-         qryLocalidad.Delete;
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Localidad Educativa No. [' + qryLocalidad.FieldByName('id_Localidad').AsString + ']';
+        qryLocalidad.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
          on e : exception do begin
            UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Estatus de Empleados', 'Al eliminar registro', 0);

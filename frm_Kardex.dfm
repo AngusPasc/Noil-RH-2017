@@ -148,7 +148,7 @@ object frmKardex: TfrmKardex
         Width = 82
       end
       object gridKardexlOrigen1: TcxGridDBColumn
-        Caption = 'Origen'
+        Caption = 'Movimiento'
         DataBinding.FieldName = 'lOrigen'
         Width = 126
       end

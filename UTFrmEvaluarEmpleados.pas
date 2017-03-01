@@ -555,6 +555,8 @@ begin
 
   //Poner el foco en el combo cbbValores
   cbbValores.SetFocus;
+
+
 end;
 
 procedure TFrmEvaluarEmpleados.btnSeleccionarClick(Sender: TObject);

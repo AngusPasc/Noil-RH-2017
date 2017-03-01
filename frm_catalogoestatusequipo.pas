@@ -25,7 +25,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray;
+  dxSkinOffice2013LightGray, UnitGenerales;
 
 type
   TfrmCatalogoEstatusEquipo = class(TForm)
@@ -156,7 +156,7 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
-
+   global_movimiento := 'Insertó';
 
   dbequipos.SetFocus;
   qryCatEstatus.Append ;
@@ -182,6 +182,7 @@ begin
       Refresh1.Enabled := False ;
       Salir1.Enabled := False ;
       sOpcion := 'Edit';
+      global_movimiento := 'Modificó';
       tsDescripcion.SetFocus;
       qryCatEstatus.Edit;
       grid_estatus.Enabled := False;
@@ -200,6 +201,7 @@ end;
 procedure TfrmCatalogoEstatusEquipo.frmBarra1btnPostClick(Sender: TObject);
 var
   lEdicion : boolean;
+  mov : String;
 begin
 //77  try
   frmBarra1.btnPostClick(Sender);
@@ -227,6 +229,12 @@ begin
 
     qryCatEstatus.FieldValues['iColor'] := tiColores.ItemIndex;
     qryCatEstatus.Post ;
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Estatus de Equipos No. [' + qryCatEstatus.FieldByName('iId_Estatus').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación del Estatus de Equipos No. [' + qryCatEstatus.FieldByName('iId_Estatus').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
 
     Insertar1.Enabled  := True ;
     Editar1.Enabled    := True ;
@@ -252,23 +260,29 @@ end;
 procedure TfrmCatalogoEstatusEquipo.frmBarra1btnCancelClick(Sender: TObject);
 begin
   frmBarra1.btnCancelClick(Sender);
-
+  global_movimiento := '';
   qryCatEstatus.Cancel;
   desactivapop(popupprincipal);
   BotonPermiso.permisosBotones(frmBarra1);
   frmbarra1.btnPrinter.Enabled := False;
   grid_estatus.Enabled := True;
   sOpcion := '';
+  global_movimiento := '';
+  
 end;
 
 procedure TfrmCatalogoEstatusEquipo.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If qryCatEstatus.RecordCount > 0 then
   begin
     if msg_yn('Desea eliminar el Registro Activo?') then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Estatus de Equipos No. [' + qryCatEstatus.FieldByName('iId_Estatus').AsString + ']';
         qryCatEstatus.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
         on e : exception do
         begin

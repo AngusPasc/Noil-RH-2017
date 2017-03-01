@@ -24,7 +24,8 @@ uses
   cxNavigator, cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, ExtCtrls, Menus,
   cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCheckComboBox,
-  cxDBCheckComboBox, cxButtons, cxDBEdit, JvDialogs, ShellApi, cxImageComboBox;
+  cxDBCheckComboBox, cxButtons, cxDBEdit, JvDialogs, ShellApi, cxImageComboBox,
+  UnitGenerales;
                                                                           
 type
   TFrm_DoctosxCategoria = class(TForm)
@@ -245,7 +246,7 @@ begin
   frmBarra1.btnAddClick(Sender);
   tsdescripcion.Enabled := True;
   cbbCategorias.Enabled:= False;
-
+  global_movimiento := 'Insertó';
   connection.QryBusca.Active := False;
   connection.QryBusca.SQL.Clear;
   connection.QryBusca.SQL.Add('SELECT MAX(id_catalogoitemschecklist_doctos) AS id FROM rh_catalogoitemschecklist_doctos;');
@@ -261,6 +262,7 @@ end;
 
 procedure TFrm_DoctosxCategoria.frmBarra1btnCancelClick(Sender: TObject);
 begin
+      global_movimiento := '';
   frmBarra1.btnCancelClick(Sender);
   tsdescripcion.Enabled := False;
   cbbCategorias.Enabled := True;
@@ -268,11 +270,17 @@ begin
 end;
 
 procedure TFrm_DoctosxCategoria.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If zq_documentos.RecordCount > 0 then
   begin
     if MSG_YN('¿Desea eliminar el Registro?') then
+    begin
+      global_movimiento := 'Eliminó';
+      mov:= 'Se realizó la eliminación del Documento Por Categoria No. [' + zq_documentos.FieldByName('id_catalogoitemschecklist_doctos').AsString + ']';
       zq_documentos.Delete ;
+      kardex_almacen(mov, global_movimiento);
+    end;
   end else MSG_ER('No hay registros que eliminar');
 end;
 
@@ -280,6 +288,7 @@ procedure TFrm_DoctosxCategoria.frmBarra1btnEditClick(Sender: TObject);
 begin
   If zq_documentos.RecordCount > 0 Then
   Begin
+    global_movimiento := 'Modificó';
     zq_documentos.Edit ;
     frmBarra1.btneditClick(Sender);
     tsdescripcion.Enabled := True;
@@ -294,7 +303,7 @@ begin
 end;
 
 procedure TFrm_DoctosxCategoria.frmBarra1btnPostClick(Sender: TObject);
-
+var mov : String;
 begin
   try
     if length(trim(tsdescripcion.Text)) = 0 then
@@ -303,10 +312,20 @@ begin
       Exit;
     end;
     zq_documentos.Post ;
+
+    if global_movimiento = 'Insertó' then
+        mov:= 'Se realizó la inserción del Documento Por Categoria No. [' + zq_documentos.FieldByName('id_catalogoitemschecklist_doctos').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+        mov:= 'Se realizó la modificación del Documento Por Categoria No. [' + zq_documentos.FieldByName('id_catalogoitemschecklist_doctos').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
     frmBarra1.btnPostClick(sender);
     grid_Documentos.Enabled := True;
     tsdescripcion.Enabled := False;
     cbbCategorias.Enabled := True;
+
     except
       on e : exception do
       begin

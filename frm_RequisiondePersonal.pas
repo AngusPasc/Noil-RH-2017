@@ -34,7 +34,7 @@ uses
   dxSkinOffice2013LightGray, dxSkinscxPCPainter, cxGridLevel, cxGridDBTableView,
   dxLayoutContainer, dxLayoutControl, dxBarBuiltInMenu, cxPC,
   dxLayoutcxEditAdapters, cxMemo, cxDBEdit, cxDBLookupComboBox, cxCalendar,
-  dxLayoutControlAdapters, cxButtons;
+  dxLayoutControlAdapters, cxButtons, UnitGenerales;
 
   function keyFiltroTdbedit (tdb:TJvDotNetDBEdit;tecla:char):boolean;
 type
@@ -385,7 +385,7 @@ begin
     Excel.Selection.VerticalAlignment := xlCenter;
     Excel.Selection.Font.Size := 10;
     Excel.Selection.Font.Bold := False;
-    Excel.Selection.Font.Name := 'Calibri';  
+    Excel.Selection.Font.Name := 'Calibri';
   end else 
   if Formato = 'Grupo' then
   begin
@@ -569,7 +569,7 @@ begin
 ////        for Dia := Filtro_FechaInicial.DateTime to Filtro_FechaFinal.DateTime do begin
 ////          //;
 ////        end;
-//          
+//
 //      end;
 //    Finally
 //      QryBusca.Free;
@@ -694,6 +694,7 @@ begin
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
    sOpcion := 'insert';
+   global_movimiento := 'Insertó';
    connection.QryBusca.Active := False;
    connection.QryBusca.SQL.Clear;
    connection.QryBusca.SQL.Add('SELECT MAX(IdRequisicionPersonal) AS id FROM rh_requisicionpersonal;');
@@ -741,18 +742,24 @@ begin
   BotonPermiso.permisosBotones(frmBarra4);
   grid_RequisiciondePersonal.Enabled:=true;
   BitBtn2.Enabled:=false;
+  global_movimiento := '';
+  
 end;
 
 procedure TfrmRequisiciondePersonal.frmBarra4btnDeleteClick(Sender: TObject);
 VAR
   QryBusca: TZQuery;
+  mov : String;
 begin
+  global_movimiento := 'Eliminó';
   if qryRequisicionPersonal.RecordCount > 0 then
   begin
     if messagedlg('Esta Seguro que desea eliminar el Registro? ', mtConfirmation,[MbYes,MbNo],0)=mrYes then
     begin
+      mov:= 'Se realizó la eliminación de la requisición del personal No. [' + ds_RequisiciondePersonal.DataSet.FieldByName('IdRequisicionPersonal').asString + ']';
       qryRequisicionPersonal.Delete;
       qryRequisicionPersonal.Refresh;
+      kardex_almacen(mov, global_movimiento);
     end;
   end else
   begin
@@ -774,7 +781,7 @@ begin
       Eliminar1.Enabled := False ;
       Refresh1.Enabled := False ;
       Salir1.Enabled := False ;
-
+      global_movimiento := 'Modificó';
       qryRequisicionPersonal.Edit;
       tsIdDepartamento.SetFocus;
 
@@ -797,9 +804,16 @@ begin
 end;
 
 procedure TfrmRequisiciondePersonal.frmBarra4btnPostClick(Sender: TObject);
+var mov : String;
 begin
 
   qryRequisicionPersonal.Post;
+    if global_movimiento = 'Insertó' then
+    mov:= 'Se realizó la inserción de la requisición del personal No. [' + ds_RequisiciondePersonal.DataSet.FieldByName('IdRequisicionPersonal').asString + ']'
+  else if global_movimiento = 'Modificó' then
+    mov:= 'Se realizó la modificacion de la requisición del personal No. [' + ds_RequisiciondePersonal.DataSet.FieldByName('IdRequisicionPersonal').asString + ']';
+
+  kardex_almacen(mov, global_movimiento);
   FrmBarra4.btnCancelClick(sender);
   grid_RequisiciondePersonal.Enabled := True;
   BitBtn2.Enabled:=false;

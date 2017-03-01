@@ -35,7 +35,7 @@ uses
   dxSkinOffice2013LightGray, AdvGlowButton, cxButtons, ExtDlgs, cxImage,
   DBClient, dblookup, dxBarBuiltInMenu, cxPC, dxLayoutContainer, dxLayoutControl,
   dxLayoutcxEditAdapters, dxLayoutControlAdapters, cxGroupBox, cxListView,
-  cxCheckBox, cxLabel, cxPropertiesStore, PictureContainer;
+  cxCheckBox, cxLabel, cxPropertiesStore, PictureContainer, UnitGenerales;
 
 Type
   Evalidaciones = class(Exception)
@@ -1581,6 +1581,7 @@ begin
     Button2.enabled           := false;
     tsFicha.enabled:=true;
     FrmBarra1.btnAddClick(sender);
+    global_movimiento := 'Insertó';
     ZqPostulante.Append;
     NACIMIENTO.date           := date;
     ZqPostulante.FieldByName('SActivo').AsString := 'No';
@@ -1642,16 +1643,23 @@ begin
   PanelMovtosRP.Enabled     := True;
   tsFicha.enabled           := True;
   FrmBarra1.btnCancelClick(Sender);
-  ZqPostulante.Cancel
+  ZqPostulante.Cancel;
+  global_movimiento := '';
+  
+
 end;
 
 procedure TFrmCatalogoDePostulante.frmBarra1btnDeleteClick(Sender: TObject);
+var mov: String;
 begin
   if ZqPostulante.RecordCount > 0 then
   begin
     if Application.MessageBox('¿Estas Seguro de Querer Eliminar Movimiento?','ELIMINAR INFO',MB_YESNO + Mb_IconQuestion) = IdYes then
     begin
+      global_movimiento:= 'Eliminó';
+      mov:= 'Se realizó la eliminación del postulante con ficha No. [' + dsPostulante.DataSet.FieldByName('sFicha').AsString + ']';
       ZqPostulante.Delete;
+      kardex_almacen(mov, global_movimiento);
       ZqPostulante.Refresh;
     end;
   end
@@ -1673,6 +1681,7 @@ begin
     grid_movtosRP.Enabled     :=False;
     Button1.enabled           := false;
     Button2.enabled           := false;
+    global_movimiento         := 'Modificó';
     ZqPostulante.Edit;
   end
   else msg_w('No hay Postulantes seleccionados');
@@ -1688,6 +1697,7 @@ var
   BlobStream: TStream;
   FileStream: TFileStream;
   numero : integer;
+  mov : String;
 begin
   if length(trim(tsFicha.Text)) =0 then
   begin
@@ -1703,7 +1713,6 @@ begin
       interbancaria.SetFocus;
       exit;
   end;
-
 
   if ZqPostulante.state in [dsinsert] then
   begin
@@ -1852,6 +1861,12 @@ begin
 
   ZqPostulante.Post;
   FrmBarra1.btnPostClick(Sender);
+  if global_movimiento = 'Insertó' then
+    mov:= 'Se realizó la inserción del postulante con ficha No. [' + dsPostulante.DataSet.FieldByName('sFicha').AsString + ']'
+  else if global_movimiento = 'Modificó' then
+    mov:= 'Se realizó la modificacion del postulante con ficha No. [' + dsPostulante.DataSet.FieldByName('sFicha').AsString + ']';
+
+  kardex_almacen(mov, global_movimiento);
   tsFicha.enabled           := true;
   grid_postulantes.Enabled  := True;
   grid_movtosRP.Enabled     := True;

@@ -42,14 +42,11 @@ object frmContratos: TfrmContratos
     ParentShowHint = False
     ShowHint = True
     TabOrder = 0
-    ExplicitWidth = 73
     ExplicitHeight = 246
     inherited AdvPanel1: TAdvPanel
-      Width = 73
       Height = 246
       ParentShowHint = False
       ShowHint = True
-      ExplicitWidth = 73
       ExplicitHeight = 246
       FullHeight = 0
       inherited btnEdit: TcxButton
@@ -106,7 +103,7 @@ object frmContratos: TfrmContratos
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C0101080009009C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C010108000900A00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

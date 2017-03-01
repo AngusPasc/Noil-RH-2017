@@ -1397,6 +1397,7 @@ begin
     connection.zCommand.Params.ParamByName('Descripcion').AsString := sParamMensaje ;
     connection.zCommand.Params.ParamByName('Origen').AsString      := sOrigen;
     connection.zCommand.ExecSQL();
+    global_movimiento :='';
 end;
 
 procedure CargarProgramadeTrabajo(sParamContrato, sParamFolio, sParamConvenio, sParamTipo, sParamWbsAnt, sParamWbs,

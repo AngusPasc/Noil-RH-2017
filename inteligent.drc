@@ -6254,8 +6254,8 @@ END
 /* frm_turnos.dfm */
 /* frm_MovtosEmpleadosGuardias.dfm */
 /* frm_RequisiondePersonal.dfm */
-/* frmBancos.dfm */
-/* frm_catalogoestatusequipo.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frmBancos.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoestatusequipo.dfm */
 /* frmCatalogoDeCategoriasDeEquipos.dfm */
 /* frmCatalogoDeEquipos.dfm */
 /* frm_ReportesAlmacen.dfm */
@@ -6358,9 +6358,9 @@ END
 /* frm_catalogoperiodospago.dfm */
 /* frm_catalogohorariolabores.dfm */
 /* frmRegistrosPatronales.dfm */
-/* frm_catalogoprofesiones.dfm */
-/* frm_catalogolocalidad_academico.dfm */
-/* frm_catalogoentidadeseducativas.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoprofesiones.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogolocalidad_academico.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_catalogoentidadeseducativas.dfm */
 /* frmHistorialSueldos.dfm */
 /* frm_catalogoestatusempleados.dfm */
 /* frmEquiposPorEmpleadoQuitar.dfm */
@@ -6396,8 +6396,8 @@ END
 /* C:\Componentes delphi 2007\Jedi\jvcl\Resources\JvSpin.Res */
 /* UTFrmPeriodosGuardia.dfm */
 /* UTFrmGuardias.dfm */
+/* D:\SourceTree 2017\Noil-RH-2017\UTFrmEvaluarEmpleados.dfm */
 /* UTFrmEvaluacionPersonal.dfm */
-/* UTFrmEvaluarEmpleados.dfm */
 /* frmDoctosXcategoria.dfm */
 /* UTFrmDevolucionEmpProv.dfm */
 /* UTFrmIniciacionSaldo.dfm */

@@ -29,8 +29,6 @@ object frmCatalogoEstatusEquipo: TfrmCatalogoEstatusEquipo
     Height = 440
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 240
-    ExplicitWidth = 958
     object Grid_Estatus: TcxGrid
       Left = 1
       Top = 1
@@ -41,7 +39,6 @@ object frmCatalogoEstatusEquipo: TfrmCatalogoEstatusEquipo
       TabOrder = 0
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
-      ExplicitWidth = 1124
       object BView_EstatusEquipos: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         Navigator.Buttons.Insert.Visible = False
@@ -196,12 +193,10 @@ object frmCatalogoEstatusEquipo: TfrmCatalogoEstatusEquipo
     VertScrollBar.Style = ssHotTrack
     Align = alLeft
     TabOrder = 6
-    ExplicitLeft = 72
     ExplicitHeight = 440
     inherited AdvPanel1: TAdvPanel
       Height = 440
-      ExplicitLeft = -16
-      ExplicitHeight = 225
+      ExplicitHeight = 440
       FullHeight = 0
       inherited btnEdit: TcxButton
         OnClick = frmBarra1btnEditClick
@@ -237,7 +232,7 @@ object frmCatalogoEstatusEquipo: TfrmCatalogoEstatusEquipo
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C010108000900380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C0101080009003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

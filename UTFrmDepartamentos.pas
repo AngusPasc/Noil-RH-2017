@@ -22,7 +22,7 @@ uses
   cxInplaceContainer, cxTLData, cxDBTL, cxGroupBox, dxorgchr, DB, DBClient,
   cxMaskEdit, dxdborgc, frm_barra, ZAbstractRODataset, ZAbstractDataset,
   ZDataset, cxLabel, cxMemo, cxDBEdit, cxTextEdit, ExtCtrls, Menus, StdCtrls,
-  cxButtons;
+  cxButtons, global, UnitGenerales;
 
 type
   TFrmDepartamentos = class(TForm)
@@ -62,6 +62,7 @@ type
     procedure btnAddClick(Sender: TObject);
     procedure cxbtnCancelarClick(Sender: TObject);
     procedure dxOrgChart1Click(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
     gForm: TForm;
@@ -83,6 +84,7 @@ procedure TFrmDepartamentos.btnAddClick(Sender: TObject);
 begin
   if Assigned(gForm) then
   begin
+    global_movimiento := 'Insertó';
     zDeptos.Insert;
     gForm.Caption := 'Captura de departamento.';
     pnlDatos.visible := true;
@@ -90,16 +92,25 @@ begin
   end;
 end;
 
+procedure TFrmDepartamentos.btnCancelClick(Sender: TObject);
+begin
+      global_movimiento := '';
+end;
+
 procedure TFrmDepartamentos.btnDeleteClick(Sender: TObject);
 var
   cursor: TCursor;
+  mov : String;
 begin
   if zdeptos.fieldByName('IdDepartamento').asinteger = -5 then
     raise Exception.create('Este registro se puede eliminar.');
 
   If (MessageDlg('¿Estás seguro que deseas eliminar el depto seleccionado?', mtConfirmation, [mbYes, mbNo], 0) = MrYes) and (zDeptos.Locate('IdDepartamento', Seleccionado, [])) then
   begin
+    global_movimiento := 'Eliminó';
+    mov:= 'Se realizó la eliminación del Departamento No. [' + zDeptos.FieldByName('iddepartamento').AsString + ']';
     zDeptos.delete;
+    kardex_almacen(mov, global_movimiento);
     btnRefreshClick(nil);
   end;
 end;
@@ -114,6 +125,7 @@ begin
 
   if Assigned(gForm) then
   begin
+    global_movimiento := 'Modificó';
     zDeptos.Edit;
     gForm.Caption := 'Edición de departamento.';
     pnlDatos.visible := true;
@@ -171,6 +183,7 @@ begin
 end;
 
 procedure TFrmDepartamentos.cxbtnAceptarClick(Sender: TObject);
+var mov :String;
 begin
   if ValidaCampos then
   Try
@@ -191,6 +204,15 @@ begin
     end;
 
     zDeptos.post;
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Departamento No. [' + zDeptos.FieldByName('iddepartamento').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+    mov:= 'Se realizó la modificación del Departamento No. [' + zDeptos.FieldByName('iddepartamento').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
     gForm.Close;
     btnRefreshClick(nil);
   Except
@@ -203,6 +225,7 @@ procedure TFrmDepartamentos.cxbtnCancelarClick(Sender: TObject);
 begin
   if zDeptos.state in [dsEdit, dsInsert] then
   begin
+    global_movimiento := '';
     zDeptos.Cancel;
   end;
 end;

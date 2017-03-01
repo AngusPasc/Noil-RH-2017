@@ -25,7 +25,7 @@ uses
   cxGridCustomView, cxGrid, frm_barra, ExtCtrls, cxLabel, cxMemo, cxSpinEdit,
   cxMaskEdit, cxDropDownEdit, cxTextEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  cxButtonEdit, cxButtons, Grids, DBGrids, global;
+  cxButtonEdit, cxButtons, Grids, DBGrids, global, UnitGenerales;
 
 type
   TFrmCatalogoCargos = class(TForm)
@@ -134,6 +134,7 @@ uses
 procedure TFrmCatalogoCargos.btnAddClick(Sender: TObject);
 begin
   try
+    global_movimiento := 'Insertó';
     if zCargo.active then
       zCargo.Append;
   finally
@@ -149,15 +150,24 @@ begin
     if zCargo.State in [dsInsert, dsEdit] then
       zCargo.Cancel;
   finally
+    global_movimiento := '';
     estadoBotones;
   end;
 end;
 
 procedure TFrmCatalogoCargos.btnDeleteClick(Sender: TObject);
+var mov :String;
 begin
   try
+
     if zCargo.active and (zCargo.RecordCount > 0) and (MessageDlg('¿Estás seguro que deseas eliminar el cargo [' + zCargo.FieldByName('CodigoCargo').AsString + ' - ' + zCargo.FieldByName('TituloCargo').asString +']?', mtConfirmation, [mbYes, mbNo], 0 ) = mrYes)then
+    begin
+      global_movimiento := 'Eliminó';
+      mov:= 'Se realizó la eliminación del Cargo No. [' + zCargo.FieldByName('IdCargo').AsString + ']';
       zCargo.Delete;
+
+      kardex_almacen(mov, global_movimiento);
+    end;
   finally
     estadoBotones;
   end;
@@ -166,6 +176,7 @@ end;
 procedure TFrmCatalogoCargos.btnEditClick(Sender: TObject);
 begin
   try
+    global_movimiento := 'Modificó';
     if zCargo.active and (zCargo.Recordcount > 0) then
       zCargo.Edit;
   finally
@@ -183,7 +194,7 @@ end;
 procedure TFrmCatalogoCargos.btnPostClick(Sender: TObject);
 var
   Error: Boolean;
-  CadMsj: String;
+  CadMsj, mov: String;
 begin
   try
     Error := ValidaCampos;
@@ -206,6 +217,14 @@ begin
         zCargo.Post;
         MessageDlg(CadMsj, mtInformation, [mbOK], 0);
       end;
+
+      if global_movimiento = 'Insertó' then
+        mov:= 'Se realizó la inserción del Cargo No. [' + zCargo.FieldByName('IdCargo').AsString + ']'
+      else if global_movimiento = 'Modificó' then
+        mov:= 'Se realizó la modificación del Cargo No. [' + zCargo.FieldByName('IdCargo').AsString + ']';
+
+      kardex_almacen(mov, global_movimiento);
+
 
       //Estas lineas es para actualizar los combos de otros formularios de los cuales se haya llamado este formulario
       if global_frmActivo = 'Frm_CatalogoDePostulante' then

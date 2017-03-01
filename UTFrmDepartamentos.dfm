@@ -123,11 +123,12 @@ object FrmDepartamentos: TFrmDepartamentos
         ExplicitTop = 192
       end
       inherited btnCancel: TcxButton
-        Left = 8
-        Top = 185
+        Left = 6
+        Top = 161
         Visible = False
-        ExplicitLeft = 8
-        ExplicitTop = 185
+        OnClick = btnCancelClick
+        ExplicitLeft = 6
+        ExplicitTop = 161
       end
       inherited btnDelete: TcxButton
         Left = 8
@@ -177,7 +178,7 @@ object FrmDepartamentos: TFrmDepartamentos
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C010108000900740610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C010108000900780610001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

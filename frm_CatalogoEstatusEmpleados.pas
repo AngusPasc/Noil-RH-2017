@@ -24,7 +24,8 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid,
+  UnitGenerales;
 
 type
   TfrmCatalogoEstatusEmpleados = class(TForm)
@@ -171,6 +172,7 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
+   global_movimiento := 'Insertó';
    qryestatus.Append ;
    qryestatus.FieldValues['sDescripcion'] := '';
    tsDescripcion.SetFocus;
@@ -194,6 +196,7 @@ begin
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
            sOpcion := 'Edit';
+           global_movimiento := 'Modificó';
            tsDescripcion.SetFocus;
            qryEstatus.Edit;
            grid_estatus.Enabled := False;
@@ -211,6 +214,7 @@ end;
 procedure TfrmCatalogoEstatusEmpleados.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov : String;
 begin
     frmBarra1.btnPostClick(Sender);
     if trim(tsDescripcion.Text) = '' then
@@ -221,6 +225,12 @@ begin
 
     qryestatus.FieldValues['iColor'] := tiColores.ItemIndex;
     qryestatus.Post;
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Estatus de Empleado No. [' + qryestatus.FieldByName('iIdEstatus').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificacion del Estatus de Empleado No. [' + qryestatus.FieldByName('iIdEstatus').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
 
     Insertar1.Enabled  := True ;
     Editar1.Enabled    := True ;
@@ -248,10 +258,11 @@ begin
    frmbarra1.btnPrinter.Enabled := False;
    grid_estatus.Enabled := True;
    sOpcion := '';
-
+   global_movimiento := '';
 end;
 
 procedure TfrmCatalogoEstatusEmpleados.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If qryestatus.RecordCount > 0 then
   begin
@@ -259,6 +270,8 @@ begin
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Estatus de Empleado No. [' + qryestatus.FieldByName('iIdEstatus').AsString + ']';
         connection.QryBusca.Active:=False;
         connection.QryBusca.SQL.Clear;
         connection.QryBusca.SQL.Add('select * from empleados where iIdEstatus = :iIdEstatus');
@@ -269,6 +282,8 @@ begin
           MessageDlg('No es posible eliminar el registro por que esta asigado a un empleado', mtWarning, [ mbOk ], 0 );
           Exit;
         end else qryestatus.Delete;
+
+        kardex_almacen(mov, global_movimiento);
       except
          on e : exception do
          begin

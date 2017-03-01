@@ -43,14 +43,11 @@ object Frm_DoctosxCategoria: TFrm_DoctosxCategoria
     ShowHint = True
     TabOrder = 0
     ExplicitTop = 25
-    ExplicitWidth = 73
     ExplicitHeight = 271
     inherited AdvPanel1: TAdvPanel
-      Width = 73
       Height = 271
       ParentShowHint = False
       ShowHint = True
-      ExplicitWidth = 73
       ExplicitHeight = 271
       FullHeight = 0
       inherited btnEdit: TcxButton
@@ -106,7 +103,7 @@ object Frm_DoctosxCategoria: TFrm_DoctosxCategoria
     end
     inherited ImgBtns: TImageList
       Bitmap = {
-        494C010108000900480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C0101080009004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

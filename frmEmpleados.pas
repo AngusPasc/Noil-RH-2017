@@ -2619,6 +2619,7 @@ begin
   grid_empleados.Enabled := False;
   cxPage.ActivePageIndex := 0;
   IsOpen:=false;
+  global_movimiento := 'Insertó';
   zQEmpleados.Append;
 
   cxSexo.Text := 'MASCULINO';
@@ -2736,7 +2737,8 @@ end;
 
 procedure Tfrm_Empleados.frmBarra1btnDeleteClick(Sender: TObject);
 var
-  Id : String;
+  Id, mov : String;
+
 begin
   If zQEmpleados.RecordCount  > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',mtConfirmation, [mbYes, mbNo], 0) = mrYes then
@@ -2827,6 +2829,9 @@ begin
             end;
           end;
         end;
+      global_movimiento := 'Eliminó';
+      mov:= 'Se realizó la eliminación del postulante con ficha No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']';
+      kardex_almacen(mov, global_movimiento);
       except
         MessageDlg('Ocurrio un error al eliminar el registro.', mtInformation, [mbOk], 0);
       end
@@ -2842,6 +2847,7 @@ begin
     IdEmpleadoAnt   := cxIdEmpleado.Text;
     EstatusEmpleado := cxEstatus.Text;
     grid_empleados.Enabled := False;
+    global_movimiento         := 'Modificó';
     zQEmpleados.Edit;
 
     EditarSN := TRUE;
@@ -2892,6 +2898,7 @@ Var i, cuenta: Integer;
   scanTable  : Boolean;
   Indice     : Integer;
   SavePlace  : TBookmark;
+  mov        : String;
 begin
  // try
     if (zQEmpleados.State in [dsInsert]) or (zQEmpleados.State in [dsEdit]) then
@@ -3138,6 +3145,7 @@ begin
     end;
     zQEmpleados.Post;
     zQPersonal.Post;
+
   end
   else
   begin
@@ -3194,6 +3202,14 @@ begin
 //      ShowMessage('Ocurrio un error al Insertar, intentelo nuevamente mas tarde.');
 //    end;
 //  end;
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Empleado No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificacion del Empleado No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']';
+
+  kardex_almacen(mov, global_movimiento);
+
+
   frmBarra1.btnCancel.Click ;
 end;
 

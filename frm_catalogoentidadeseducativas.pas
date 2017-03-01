@@ -25,7 +25,7 @@ uses
   cxControls, cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxNavigator, cxDBData, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGrid;
+  cxGrid, UnitGenerales;
 
 type
   TfrmCatalogoEntidadesEducativas = class(TForm)
@@ -251,6 +251,7 @@ begin
   Eliminar1.Enabled  := False;
   Refresh1.Enabled   := False;
   Salir1.Enabled     := False;
+  global_movimiento := 'Insertó';
   tsNombre.SetFocus;
   qryEntidadesEducativas.Append ;
   qryEntidadesEducativas.FieldValues['sNivelAcademico'] := 'PROFESIONAL';
@@ -279,6 +280,7 @@ begin
       Refresh1.Enabled := False ;
       Salir1.Enabled := False ;
       sOpcion := 'Edit';
+      global_movimiento := 'Modificó';
       tsNombre.SetFocus;
       qryEntidadesEducativas.Edit;
       grid_Escuelas.Enabled := False;
@@ -295,6 +297,7 @@ end;
 procedure TfrmCatalogoEntidadesEducativas.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov : String;
 begin
   try
     if trim(tsNombre.Text) = '' then
@@ -326,6 +329,13 @@ begin
     qryEntidadesEducativas.FieldValues['id_municipios'] := zqryMunicipios.FieldValues['id_municipios'];
     qryEntidadesEducativas.FieldValues['id_Estados']    :=       zqryEstados.FieldValues['id_Estados'];
     qryEntidadesEducativas.Post ;
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción de la Entidad Educativa No. [' + qryEntidadesEducativas.FieldByName('id_entidadeseducativas').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Entidad Educativa No. [' + qryEntidadesEducativas.FieldByName('id_entidadeseducativas').AsString  + ']';
+
+    kardex_almacen(mov, global_movimiento);
 
     frmBarra1.btnPostClick(Sender);
     Insertar1.Enabled  :=  True;
@@ -365,16 +375,21 @@ begin
    frmbarra1.btnPrinter.Enabled :=   False;
    grid_Escuelas.Enabled    :=  True;
    sOpcion := '';
+   global_movimiento := '';
 end;
 
 procedure TfrmCatalogoEntidadesEducativas.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   If qryEntidadesEducativas.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Entidad Educativa No. [' + qryEntidadesEducativas.FieldByName('id_entidadeseducativas').AsString + ']';
         qryEntidadesEducativas.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
         on e : exception do begin
           UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Estatus de Empleados', 'Al eliminar registro', 0);

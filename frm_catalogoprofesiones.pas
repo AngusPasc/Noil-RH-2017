@@ -24,7 +24,8 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  UnitGenerales;
 
 type
   TfrmCatalogoProfesiones = class(TForm)
@@ -144,6 +145,7 @@ begin
    Eliminar1.Enabled := False ;
    Refresh1.Enabled := False ;
    Salir1.Enabled := False ;
+   global_movimiento := 'Insertó';
    qryProfesiones.Append ;
    qryProfesiones.FieldValues['sDescripcion'] := '';
    tsDescripcion.SetFocus;
@@ -167,6 +169,7 @@ begin
            Refresh1.Enabled := False ;
            Salir1.Enabled := False ;
            sOpcion := 'Edit';
+           global_movimiento := 'Modificó';
            tsDescripcion.SetFocus;
            qryProfesiones.Edit;
            grid_estatus.Enabled := False;
@@ -183,6 +186,7 @@ end;
 procedure TfrmCatalogoProfesiones.frmBarra1btnPostClick(Sender: TObject);
 var
     lEdicion : boolean;
+    mov :String;
 begin
 
     try
@@ -205,6 +209,14 @@ begin
                qryProfesiones.FieldValues['iIdProfesiones'] := connection.QryBusca.FieldValues['id'] + 1;
           end;
           qryProfesiones.Post ;
+
+          if global_movimiento = 'Insertó' then
+            mov:= 'Se realizó la inserción de la Profesión No. [' + qryProfesiones.FieldByName('iIdProfesiones').AsString + ']'
+          else if global_movimiento = 'Modificó' then
+            mov:= 'Se realizó la modificación de la Profesión No. [' + qryProfesiones.FieldByName('iIdProfesiones').AsString + ']';
+
+          kardex_almacen(mov, global_movimiento);
+
           Insertar1.Enabled  := True ;
           Editar1.Enabled    := True ;
           Registrar1.Enabled := False ;
@@ -245,13 +257,17 @@ begin
 end;
 
 procedure TfrmCatalogoProfesiones.frmBarra1btnDeleteClick(Sender: TObject);
+var mov: String;
 begin
   If qryProfesiones.RecordCount > 0 then
     if MessageDlg('Desea eliminar el Registro Activo?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
      try
-         qryProfesiones.Delete;
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Profesión No. [' + qryProfesiones.FieldByName('iIdProfesiones').AsString + ']';
+        qryProfesiones.Delete;
+        kardex_almacen(mov, global_movimiento);
       except
          on e : exception do begin
            UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'Catalogo de Estatus de Empleados', 'Al eliminar registro', 0);
