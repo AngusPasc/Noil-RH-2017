@@ -26,7 +26,7 @@ uses
   cxClasses, cxGridCustomView, cxGrid, DBCtrls, AdvGlowButton, ComCtrls,
   AdvPanel, Grids, DBGrids, RXDBCtrl, NxScrollControl, NxCustomGridControl,
   NxCustomGrid, NxGrid, Spin, frm_barra, frxClass, frxDBSet, Buttons, Menus,
-  cxButtons, OleServer, ExtDlgs;
+  cxButtons, OleServer, ExtDlgs, UnitGenerales;
 
 type
   TFrmEvaluarEmpleados = class(TForm)
@@ -242,16 +242,16 @@ begin
   lblTituloDescripcion.Visible := false;
   lblDescripcion.Visible := False;
   //Deshabilita los campos
-limpiarCampos;
-DeshabilitarCasillas;
+    limpiarCampos;
+    DeshabilitarCasillas;
   //Habilitar los botones que se deshbilitaron
-  btnNuevo.Enabled := true;
+    btnNuevo.Enabled := true;
     btnEditar.Enabled := true;
     btnEliminar.Enabled := true;
     btnImprimir.Enabled := true;
     btnExportar.Enabled := true;
     btnSalir.Enabled := true;
-
+    global_movimiento := '';
     //Habilitar los grid de empleados
     gridCalificaciones.Enabled := true;
     cxgrd1.Enabled := true;
@@ -270,7 +270,7 @@ begin
     //Deshabilitar los grid para que no cambien de empleado en la creacion de una evaluacion
     cxgrd1.Enabled := false;
     gridCalificaciones.Enabled := false;
-
+    global_movimiento := 'Modificó';
     //Habilita los campos para hacer la edicion de la evaluacion del empleado
     habilitarCasillas;
 
@@ -296,6 +296,7 @@ end;
 procedure TFrmEvaluarEmpleados.btnEliminarClick(Sender: TObject);
 var
   zqryEliminarEvaluacion : TZQuery;
+  mov :String;
 begin
   //Eliminar el registro seleccionado del grid de evaluaciones
   If zqryEvaluaciones.RecordCount > 0 then
@@ -304,6 +305,9 @@ begin
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
         begin
           try
+          global_movimiento := 'Eliminó';
+          mov:= 'Se realizó la eliminación de la Evaluación de Empleado No. [' + zqryEvaluaciones.FieldByName('IidEvaluacion').AsString + ']';
+
           zqryEliminarEvaluacion := TZQuery.Create(Self);
           zqryEliminarEvaluacion.Connection := connection.ZConnection;
           zqryEliminarEvaluacion.Active:=False;
@@ -313,7 +317,7 @@ begin
           zqryEliminarEvaluacion.Params.ParamByName('iAnoEvaluado').AsInteger := zqryEvaluaciones.FieldByName('iAnoEvaluado').AsInteger;
 
           zqryEliminarEvaluacion.ExecSQL;
-
+          kardex_almacen(mov, global_movimiento);
           zqryEvaluaciones.Refresh;
 
           //Cada vez que se elimine una fila, se deben de poner vacias los campos del form
@@ -338,6 +342,7 @@ var
   zqryInsertarEvaluacion : TZQuery;
   zqryValidarGuardado : TZQuery;
   zqryActualizarEvaluacion : TZQuery;
+  mov : String;
 begin
   if editar = false then
   begin
@@ -481,6 +486,13 @@ begin
     gridCalificaciones.Enabled := true;
   end;
 
+  if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción de la Evaluación de Empleado No. [' + zqryEvaluaciones.FieldByName('IidEvaluacion').AsString + ']'
+  else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Evaluación de Empleado No. [' + zqryEvaluaciones.FieldByName('IidEvaluacion').AsString + ']';
+
+  kardex_almacen(mov, global_movimiento);
+
 end;
 
 procedure TFrmEvaluarEmpleados.btnImportarEvaluacionClick(Sender: TObject);
@@ -539,6 +551,7 @@ begin
 
   //Habilita las opciones para poder evluar al empleado
   limpiarCampos;
+  global_movimiento := 'Insertó';
   habilitarCasillas;
 
   //Habilitar los botones de Salvar y Cancelar
