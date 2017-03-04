@@ -607,7 +607,7 @@ begin
 
   cxVisualizar.Enabled := False;
   cxExaminar.Enabled := True;
-
+  global_movimiento := 'Insertó';
   Insumos.Append;
   Insumos.FieldByName('dCantidad').Asfloat   := 0;
   Insumos.FieldValues['sContrato']           := Global_Contrato;
@@ -690,7 +690,7 @@ begin
     Refresh1.Enabled := False;
     Salir1.Enabled := False;
     sOpcion := 'Edit';
-
+    global_movimiento := 'Modificó';
     dbGrupos.Enabled := True;
     dbMarca.Enabled := True;
     dbSubFamilia.Enabled := True;
@@ -725,7 +725,7 @@ end;
 
 procedure TfrmConsumibles.frmBarra1btnPostClick(Sender: TObject);
 var
-  cadena: string;
+  cadena, mov: string;
   nombres,
   cadenas: TStringList;
   lEdita: boolean;
@@ -906,6 +906,13 @@ begin
 
   //if (lEdita) and (insumos.FieldByName('sIdInsumo').AsString <> sIdOrig) then
        //tablasDependientes(sIdOrig);
+       
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción del Material No. [' + insumos.FieldByName('sIdInsumo').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación del Material No. [' + insumos.FieldByName('sIdInsumo').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
 
   Insumos.Refresh;
 
@@ -947,7 +954,7 @@ begin
   BotonPermiso.permisosBotones(frmBarra1);
   grid_materiales.Enabled := True;
   sOpcion := '';
-
+  global_movimiento := '';
 
   dbGrupos.Enabled := False;
   dbMarca.Enabled := False;
@@ -958,6 +965,7 @@ begin
 end;
 
 procedure TfrmConsumibles.frmBarra1btnDeleteClick(Sender: TObject);
+var mov :String;
 begin
   if Insumos.RecordCount > 0 then
     if Insumos.FieldByName('sContrato').AsString=global_contrato then
@@ -980,8 +988,11 @@ begin
           connection.zCommand.ParamByName('Contrato').AsString := global_contrato;
           connection.zCommand.ParamByName('Insumo').AsString := insumos.FieldValues['sIdInsumo'];
           connection.zCommand.ExecSQL;
-
+          global_movimiento := 'Eliminó';
+          mov:= 'Se realizó la eliminación del Material No. [' + insumos.FieldByName('sIdInsumo').AsString + ']';
           Insumos.Delete;
+          kardex_almacen(mov, global_movimiento);
+
         except
           on e: exception do begin
             UnitExcepciones.manejarExcep(E.Message, E.ClassName, 'CATALOGO DE MATERIALES', 'Al eliminar registro', 0);

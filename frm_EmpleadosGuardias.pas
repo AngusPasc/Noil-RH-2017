@@ -40,7 +40,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter,
   ZSqlUpdate, JvExComCtrls, JvDateTimePicker, AdvCombo, Lucombo, dblucomb,
   AdvDBLookupComboBox, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, cxSplitter, sDialogs, func_Genericas;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, cxSplitter, sDialogs,
+  func_Genericas, UnitGenerales;
 
   function keyFiltroTdbedit (tdb:TJvDotNetDBEdit;tecla:char):boolean;
   type
@@ -4115,6 +4116,7 @@ end;
 procedure TfrmEmpleadosGuardias.cmdAceptarGuardiaClick(Sender: TObject);
 var
   Maximo : integer;
+  mov : String;
 begin
   try
     if sFolioGuardia.text='' then
@@ -4245,6 +4247,15 @@ begin
         zqryOrdenes.FreeBookmark(posicion);
         MSG_OK('El No. Guardia '+sFolioGuardia.Text+ ' se editó correctamente... !');
       end;
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la creación de la Alta de Guardia No. [' + zqryGuardiasMovtos.FieldByName('iIdGuardia').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Alta de Guardia No. [' + zqryGuardiasMovtos.FieldByName('iIdGuardia').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
     end
     else MSG_OK('Le fecha de subida debe ser menos a la fecha de bajada, verificar la información');
   except
@@ -4307,7 +4318,7 @@ begin
         MessageDlg('¡Éste empleado ya esta dentro de la guardia seleccionada!', mtInformation, [mbOk], 0);
     end
     else
-      MessageDlg('No es posible agregar a este empleado a la guardia, puesto que la fecha en que sube y baja ' + 
+      MessageDlg('No es posible agregar a este empleado a la guardia, puesto que la fecha en que sube y baja ' +
                 'se cruzan con otras guardias', mtInformation, [mbOk], 0);
   end
   else
@@ -4334,6 +4345,7 @@ begin
   frmBarra4.btnRefresh.Enabled  :=  True;
   frmBarra4.btnPrinter.Enabled  :=  True;
   grid_Guardias.Enabled         :=  True;
+  global_movimiento := '';
   listaguardias.close;
   cmdAceptarGuardia.Visible := true;
   Button1.Visible      :=      true;
@@ -5495,6 +5507,7 @@ begin
     Abort;
   end;
   frmBarra4.btnAddClick(Sender);
+  global_movimiento := 'Insertó';
   PanelGuardia.Visible           := True;
   PanelGuardia.Top               :=  168;
   PanelGuardia.left              :=  309;
@@ -5552,6 +5565,7 @@ begin
 end;
 
 procedure TfrmEmpleadosGuardias.frmBarra4btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   if (zqryGuardiasMovtos.recordcount = 0) then
   begin
@@ -5573,6 +5587,8 @@ begin
     if MSG_YN('¿Desea eliminar el Registro Activo?') then
     begin
       //Ahora actualizamos los datos en la tabla de guardiasmovtos
+      global_movimiento := 'Eliminó';
+      mov:= 'Se realizó la eliminación de la Alta de Guardia No. [' + zqryGuardiasMovtos.FieldByName('iIdGuardia').AsString + ']';
       connection.QryBusca.Active := False;
       connection.QryBusca.SQL.Clear;
       connection.QryBusca.SQL.Add('delete from guardias where sIdfolio =:IdFolio and  ID_PeriodoGuardia =:PeriodoGuardia and sNumeroOrden = :NumeroOrden');
@@ -5580,8 +5596,12 @@ begin
       connection.QryBusca.ParamByName('PeriodoGuardia').AsInteger := zqryGuardiasMovtos.FieldByName('ID_PeriodoGuardia').AsInteger;
       connection.QryBusca.ParamByName('NumeroOrden').AsString     := zqryOrdenes.FieldByName('sNumeroOrden').AsString;
       connection.QryBusca.ExecSQL;
+
+      kardex_almacen(mov, global_movimiento);
+      
       zqryEmpleados.Filtered := False;;
       posicion:= zqryOrdenes.GetBookmark;
+
       actualizar;
       zqryOrdenes.GotoBookmark(posicion);
       zqryOrdenes.FreeBookmark(posicion);
@@ -5598,6 +5618,7 @@ begin
   end;
   if zqryGuardiasMovtos.RecordCount > 0 then
   begin
+    global_movimiento := 'Modificó';
     PanelGuardia.Visible           := True;
     PanelGuardia.Top               :=  168;
     PanelGuardia.left              :=  309;
@@ -5717,6 +5738,7 @@ begin
     if zqryGuardiasMovtos.fieldvalues['Autorizar'] = 'NO' then
     begin
       frmBotonera1.btnAddClick(Sender);
+      global_movimiento := 'Insertó';
       sOpcion := 'InsertaDato';
       grid_embarcaciones.enabled  := False;
       grid_Guardias.enabled       := False;
@@ -5736,7 +5758,7 @@ begin
   try
     BView_EmpleadosColumn1.Options.Editing := False;
     zqryEmpleados.CancelUpdates;
-
+    global_movimiento := '';
     if connection.zconnection.InTransaction then
       connection.zConnection.Rollback;
 
@@ -5770,6 +5792,7 @@ procedure TfrmEmpleadosGuardias.frmBotonera1btnDeleteClick(Sender: TObject);
 var
   i : Integer;
   arraySIdEmpleados : array of String;
+  mov : String;
 begin
   if zqryGuardiasMovtos.fieldvalues['Autorizar'] = 'SI' then
   begin
@@ -5807,6 +5830,8 @@ begin
 
         for i := 0 to Length(arraySIdEmpleados) - 1 do
         begin
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Asignación de "Guardia a Empleado" No. [' + zqryEmpleados.FieldByName('iidguardiamovtos').AsString + ']';
           //Quitamos el registro de guardias movimientos
           connection.QryBusca.Active := False;
           connection.QryBusca.SQL.Clear;
@@ -5817,6 +5842,7 @@ begin
           connection.QryBusca.ParamByName('iIdGuardia').AsInteger         := zqryEmpleados.FieldByName('iIdGuardia').AsInteger;
           connection.QryBusca.ExecSQL;
 
+          kardex_almacen(mov, global_movimiento);
           zqryEmpleados.Refresh;
 
           ejecutarAfterScroll := False;
@@ -5853,6 +5879,7 @@ begin
   if zqryGuardiasMovtos.RecordCount > 0 then
   begin
     BView_EmpleadosColumn1.Options.Editing := True;
+    global_movimiento := 'Modificó';
     zqryEmpleados.Edit;
 
     if zqryEmpleados.fieldbyname('Contratado').asstring = 'NO' then
@@ -5906,6 +5933,7 @@ var
   IdMovto, i : integer;
   valor:String;
   Z4,Z5,Z6,Z7,Z8 : TZQuery;
+  mov : String;
 begin
   try
     Z4:= TZQuery.Create(nil);
@@ -6027,6 +6055,15 @@ begin
         end;
       end;
     end;
+
+    if global_movimiento = 'Insertó' then
+      mov:= 'Se realizó la inserción de la Asignación de "Guardia a Empleado" No. [' + zqryEmpleados.FieldByName('iidguardiamovtos').AsString + ']'
+    else if global_movimiento = 'Modificó' then
+      mov:= 'Se realizó la modificación de la Asignación de "Guardia a Empleado" No. [' + zqryEmpleados.FieldByName('iidguardiamovtos').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
     rxEmpleados.Active        := True;
     rxEmpleados.EmptyTable;
     frmBotonera1.btnPostClick(Sender);

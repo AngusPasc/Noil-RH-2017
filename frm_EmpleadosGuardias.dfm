@@ -375,7 +375,7 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
           inherited ImgBtns: TImageList
             ShareImages = True
             Bitmap = {
-              494C010108000900080A10001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+              494C010108000900140A10001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
               0000000000003600000028000000400000003000000001002000000000000030
               0000000000000000000000000000000000000000000000000000000000000000
               0000000000000000000000000000000000000000000000000000000000000000
@@ -950,7 +950,7 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
       inherited ImgBtns: TImageList
         Top = 197
         Bitmap = {
-          494C010108000900100A10001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C0101080009001C0A10001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -2316,7 +2316,7 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
       end
       inherited ImgBtns: TImageList
         Bitmap = {
-          494C0101080009008C0710001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C010108000900980710001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -3374,10 +3374,10 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
     end
   end
   object PanelGuardia: TPanel
-    Left = 752
-    Top = 85
-    Width = 34
-    Height = 49
+    Left = 399
+    Top = 88
+    Width = 387
+    Height = 292
     Hint = 'Para dar de Alta una Guardia'
     Align = alCustom
     Color = cl3DLight
@@ -11714,8 +11714,8 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
         Name = 'IdPersonal'
         ParamType = ptUnknown
       end>
-    Left = 1088
-    Top = 324
+    Left = 1064
+    Top = 524
     ParamData = <
       item
         DataType = ftUnknown
@@ -12257,8 +12257,8 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
         Name = 'Fecha'
         ParamType = ptUnknown
       end>
-    Left = 1088
-    Top = 353
+    Left = 1064
+    Top = 569
     ParamData = <
       item
         DataType = ftUnknown
@@ -12401,8 +12401,8 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
   end
   object dsEmpleado: TDataSource
     DataSet = zqryEmpleados
-    Left = 1088
-    Top = 383
+    Left = 1064
+    Top = 607
   end
   object ZUReprogramacion: TZUpdateSQL
     ModifySQL.Strings = (
@@ -12709,8 +12709,8 @@ object frmEmpleadosGuardias: TfrmEmpleadosGuardias
   object RxPerAbordo: TRxMemoryData
     FieldDefs = <>
     AfterScroll = RxPerAbordoAfterScroll
-    Left = 1088
-    Top = 412
+    Left = 1072
+    Top = 644
     object RxPerAbordodescripcion: TStringField
       FieldName = 'descripcion'
     end

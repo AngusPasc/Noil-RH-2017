@@ -23,7 +23,7 @@ uses
   StdCtrls, Mask, DBCtrls, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, ExtCtrls, frm_barra,
   frm_connection, cxContainer, cxLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  dxSkinsdxBarPainter, dxBar, dxRibbon, UnitGenerales;
+  dxSkinsdxBarPainter, dxBar, dxRibbon, UnitGenerales, global;
 
 type
   TTipoNomina = class
@@ -253,6 +253,7 @@ begin
     try
       if zTipoNomina.RecordCount > 0 then
       begin
+        global_movimiento := 'Insertó';
         zGuardiasUpt.Append;
         zGuardiasUpt.FieldByName('iNumeroGuardia').AsString := AutoFolio('GuardiaNumero','nom_guardia','iNumeroGuardia');
         zGuardiasUpt.FieldByName('CodigoGuardia').AsString := AutoFolio('GuardiaCodigo','nom_guardia','CodigoGuardia');
@@ -294,6 +295,7 @@ begin
   begin
     try
       zGuardiasUpt.Cancel;
+      global_movimiento := '';
     finally
       EstadoBotones;
     end;
@@ -301,14 +303,18 @@ begin
 end;
 
 procedure TFrmGuardias.frmBarra1btnDeleteClick(Sender: TObject);
+var mov : String;
 begin
   if (zGuardiasUpt.Active) and (zGuardiasUpt.RecordCount > 0)then
     if MessageDlg('¿Está seguro que desea eliminar la guardia completa[' + zGuardias.FieldByName('TituloGuardia').AsString + '] y sus periodos?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       try
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación de la Guardia No. [' + zGuardias.FieldByName('IdGuardia').AsString + ']';
         zGuardiasUpt.Edit;
         zGuardiasUpt.FieldByName('Activo').AsString := 'No';
         zGuardiasUpt.Post;
+        kardex_almacen(mov, global_movimiento);
         MessageDlg('Registros eliminado correctamente.', mtInformation, [mbOK], 0);
         frmBarra1btnRefreshClick(nil);
       finally
@@ -322,6 +328,7 @@ begin
   if (zGuardiasUpt.Active) and (zGuardiasUpt.RecordCount > 0)then
   try
     try
+      global_movimiento := 'Modificó';
       zGuardiasUpt.Edit;
     finally
       EstadoBotones;
@@ -341,6 +348,7 @@ var
   zMaxGuardias: TZQuery;
   Cursor: TCursor;
   ultId: Integer;
+  mov : String;
 begin
   try
     Cursor := Screen.Cursor;
@@ -367,6 +375,15 @@ begin
         zGuardiasUpt.FieldByName('IdTipoNomina').AsInteger := CxCbbTipoNomina.KeyValue;
         zGuardiasUpt.FieldByName('Activo').AsString := 'Si';
         zGuardiasUpt.Post;
+
+        if global_movimiento = 'Insertó' then
+            mov:= 'Se realizó la inserción de la Guardia No. [' + zGuardias.FieldByName('IdGuardia').AsString + ']'
+        else if global_movimiento = 'Modificó' then
+            mov:= 'Se realizó la modificación de la Guardia No. [' + zGuardias.FieldByName('IdGuardia').AsString + ']';
+
+    kardex_almacen(mov, global_movimiento);
+
+
         frmBarra1btnRefreshClick(nil);
       except
         on e: Exception do

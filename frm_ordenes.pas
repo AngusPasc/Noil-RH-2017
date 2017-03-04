@@ -614,6 +614,7 @@ begin
   try
   frmBarra1.btnAddClick(Sender);
    Opcion := 'Nuevo';
+   global_movimiento := 'Insertó';
    Insertar1.Enabled := False ;
    Editar1.Enabled := False ;
    Registrar1.Enabled := True ;
@@ -659,7 +660,7 @@ begin
   Refresh1.Enabled := False ;
   Salir1.Enabled := False ;
   cxPageControl1.ActivePageIndex := 0;
-
+  global_movimiento := 'Modificó';
   sIdOrig := OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString;
   try
     opcion  := 'actualizar';
@@ -684,7 +685,7 @@ end;
 
 procedure TfrmOrdenes.frmBarra1btnPostClick(Sender: TObject);
 var
-  cadena, sId   : string;
+  cadena, sId, mov   : string;
   nombres,
   cadenas  : TStringList;
   lEdita   : boolean;
@@ -743,13 +744,19 @@ begin
     global_FrenteTrabajo :=  tsNumeroOrden.Text;
     If OrdenesdeTrabajo.State = dsEdit Then
     Begin
-      Kardex('Sitios de Trabajo','Edita  Sitio de Trabajo', tsNumeroOrden.Text, 'Sitio de Trabajo', '', '', '' );
+      mov:= 'Se realizó la modificación del Registro de Frente No. [' + OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString + ']';
+      kardex_almacen(mov, 'Modificó');
+ //     Kardex('Sitios de Trabajo','Edita  Sitio de Trabajo', tsNumeroOrden.Text, 'Sitio de Trabajo', '', '', '' );
       OrdenesdeTrabajo.FieldValues ['eMostrarGuardia']       :=  cbbEMostrarGuardia.Text;
       lEdita := true;
     End
     Else
     Begin
-      Kardex('Sitio de Trabajo','Crea   Sitio de Trabajo', tsNumeroOrden.Text, 'Sitio de Trabajo', '', '', '' );
+
+      mov:= 'Se realizó la inserción del Registro de Frente No. [' + OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString + ']';
+      kardex_almacen(mov, 'Insertó');
+
+      //Kardex(' Sitio de Trabajo','Crea Sitio de Trabajo', tsNumeroOrden.Text, 'Sitio de Trabajo', '', '', '' );
       lEdita := false;
     End;
 
@@ -762,6 +769,11 @@ begin
     begin
       FrentT  := OrdenesdeTrabajo.FieldValues['sNumeroOrden'];
       OrdenesdeTrabajo.Post ;
+  //    if global_movimiento = 'Insertó' then
+ //       mov:= 'Se realizó la inserción del Registro de Frente No. [' + OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString + ']';
+
+ //     kardex_almacen(mov, global_movimiento);
+
       ActivarDesactivar_Botones(dxBarManager1, OrdenesdeTrabajo);
       AsginaFrenteUsuario(FrentT);
       MessageDlg('Los datos se guardaron correctamente!', mtInformation, [mbOk], 0);
@@ -775,6 +787,11 @@ begin
           //Llamada a funcion Buscar Frente en la Base de Datos..
           tsFormato.Text := tsNumeroOrden.Text;
           OrdenesdeTrabajo.Post ;
+//          if global_movimiento = 'Modificó' then
+//              mov:= 'Se realizó la modificación del Regsitro de Sitio No. [' + OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString + ']';
+
+       //   kardex_almacen(mov, global_movimiento);
+
 
           tablasDependientes(sIdOrig);
           //BuscaFrente(FrentT, opcion);
@@ -871,7 +888,7 @@ procedure TfrmOrdenes.frmBarra1btnCancelClick(Sender: TObject);
 begin
   try
     frmBarra1.btnCancelClick(Sender);
-
+    global_movimiento := '';
     desactivapop(popupprincipal);
     Insertar1.Enabled := True ;
     Editar1.Enabled := True ;
@@ -898,7 +915,7 @@ end;
 //*************************************************************************************
 procedure TfrmOrdenes.frmBarra1btnDeleteClick(Sender: TObject);
 var
-  cadena: string;
+  cadena, mov: string;
   qry : TZReadOnlyQuery;
 begin
   qry := TZReadOnlyQuery.Create(Self);
@@ -966,10 +983,12 @@ begin
         connection.zConnection.StartTransaction;
         opcion := 'borrar';
         FrentT := OrdenesdeTrabajo.FieldValues['sNumeroOrden'];
-        Kardex('Sitios de Trabajo', 'Borra Sitios de Trabajo', FrentT, 'Sitios de Trabajo', '', '', '');
+        //Kardex('Sitios de Trabajo', 'Borra Sitios de Trabajo', FrentT, 'Sitios de Trabajo', '', '', '');
         BuscaFrente(FrentT, opcion);
+        global_movimiento := 'Eliminó';
+        mov:= 'Se realizó la eliminación del Sitio de Trabajo No. [' + OrdenesdeTrabajo.FieldByName('sNumeroOrden').AsString + ']';
         OrdenesdeTrabajo.Delete;
-
+        kardex_almacen(mov, global_movimiento);
         if global_frmActivo = 'frm_pedidos' then
           frmPedidos.zqOrdenes.Refresh ;
 

@@ -219,7 +219,7 @@ begin
             connection.zCommand.Params.ParamByName('Descripcion').DataType := ftString ;
             connection.zCommand.Params.ParamByName('Descripcion').Value := 'Selección del Contrato [' + global_contrato + '] turno [' + global_turno + '] desde la dirección [' + global_ip + ']' ;
             connection.zCommand.Params.ParamByName('Origen').DataType := ftString ;
-            connection.zCommand.Params.ParamByName('Origen').Value := 'Otros Movimientos' ;
+            connection.zCommand.Params.ParamByName('Origen').Value := 'Accesó' ;
             connection.zCommand.ExecSQL ;
 
             Connection.QryBusca2.Active := False ;
