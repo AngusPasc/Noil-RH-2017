@@ -368,6 +368,44 @@ type
     dxLayoutControl3Group4: TdxLayoutAutoCreatedGroup;
     rxConstanciaSUAdFechasSUAF: TDateField;
     rxConstanciaSUAsSexo: TStringField;
+    cxPage4: TcxTabSheet;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView3: TcxGridDBTableView;
+    cxGridDBColumn11: TcxGridDBColumn;
+    cxGridDBColumn12: TcxGridDBColumn;
+    cxGridDBColumn13: TcxGridDBColumn;
+    cxGridDBColumn14: TcxGridDBColumn;
+    cxGridLevel3: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    cxGridDBTableView2: TcxGridDBTableView;
+    cxGridDBColumn5: TcxGridDBColumn;
+    cxGridDBColumn6: TcxGridDBColumn;
+    cxGridDBColumn7: TcxGridDBColumn;
+    cxGridDBColumn8: TcxGridDBColumn;
+    cxGridLevel2: TcxGridLevel;
+    AdvRecibo: TAdvGlowButton;
+    dxLayoutControl5Group_Root: TdxLayoutGroup;
+    dxLayoutControl5: TdxLayoutControl;
+    cxCalcEdit1: TcxCalcEdit;
+    dxLayoutControl5Item1: TdxLayoutItem;
+    cxTextEdit1: TcxTextEdit;
+    dxLayoutControl5Item2: TdxLayoutItem;
+    ds_Guardias: TDataSource;
+    zq_Guardias: TZQuery;
+    zq_GuardiasiIdGuardia: TIntegerField;
+    zq_GuardiassIdFolio: TStringField;
+    zq_GuardiassObservaciones: TStringField;
+    zq_GuardiasdFechaInicial: TDateField;
+    zq_GuardiasdFechaFinal: TDateField;
+    ds_detalleguardia: TDataSource;
+    zqDetalleGuardia: TZQuery;
+    zqDetalleGuardiasIdEmpleado: TStringField;
+    zqDetalleGuardiasNombreCompleto: TStringField;
+    zqDetalleGuardiasApellidoPaterno: TStringField;
+    zqDetalleGuardiasApellidoMaterno: TStringField;
+    zqDetalleGuardiadFechaSubida: TDateField;
+    zqDetalleGuardiadFechaBajada: TDateField;
+    zq_GuardiasID_PeriodoGuardia: TIntegerField;
     procedure cxCredencialClick(Sender: TObject);
     procedure cxConstanciaSuaClick(Sender: TObject);
     procedure cxImprimeCredencialClick(Sender: TObject);
@@ -387,6 +425,8 @@ type
     procedure cxListaClick(Sender: TObject);
     procedure cxSUAContratadoClick(Sender: TObject);
     procedure cxCredencialImagenClick(Sender: TObject);
+    procedure zq_GuardiasAfterScroll(DataSet: TDataSet);
+    procedure AdvReciboClick(Sender: TObject);
   private
     NetoPagar: Real;
     cdGenerales: TClientDataSet;
@@ -467,6 +507,36 @@ begin
 
     if (sender is tcxCalcEdit) then
         tcxCalcEdit(sender).Style.Color := global_color_SalidaERP;
+end;
+
+procedure TfrmImprimeDocumentos.zq_GuardiasAfterScroll(DataSet: TDataSet);
+begin
+    zqDetalleGuardia.Active:= false ;
+    zqDetalleGuardia.ParamByName('guardia').asstring        := zq_guardias.FieldByName('sIdFolio').asString;
+    zqDetalleGuardia.ParamByName('GuardiaPeriodo').asstring := zq_guardias.FieldByName('ID_PeriodoGuardia').asString;
+    zqDetalleGuardia.Open;
+end;
+
+procedure TfrmImprimeDocumentos.AdvReciboClick(Sender: TObject);
+var
+  i : Integer;
+  filtro : string;
+begin
+    if not FileExists(global_files + global_miReporte + '_ReporteViaticos.fr3') then
+    begin
+        showmessage('El archivo de reporte '+global_Mireporte+'_ReporteViaticos.fr3 no existe, notifique al administrador del sistema');
+       exit;
+    end;
+    filtro := 'sIdEmpleado = ' + QuotedStr(zqDetalleGuardia.FieldByName('sIdEmpleado').AsString);
+    ds_DetalleGuardia.dataset.Filtered := false;
+    ds_DetalleGuardia.dataset.Filter := filtro;
+    ds_DetalleGuardia.dataset.Filtered := true;
+
+    frxReport1.LoadFromFile(Global_Files +global_miReporte +'_ReporteViaticos.fr3') ;
+    frxReport1.ShowReport();
+
+    ds_DetalleGuardia.dataset.Filtered := false;
+
 end;
 
 procedure TfrmImprimeDocumentos.cxAgregaCredencialClick(Sender: TObject);
@@ -833,6 +903,13 @@ begin
     begin
        cxRegistrados.Checked := True;
        cxLista.Enabled := True;
+    end;
+
+    if cxPageDatos.ActivePageIndex = 3 then
+    begin
+       cxRegistrados.Checked := False;
+       zq_Guardias.Active := False;
+       zq_Guardias.Open;
     end;
 
 end;

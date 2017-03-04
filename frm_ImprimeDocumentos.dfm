@@ -5,7 +5,7 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
   BorderStyle = bsSingle
   Caption = 'Imprimir Documentos'
   ClientHeight = 492
-  ClientWidth = 854
+  ClientWidth = 855
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -120,28 +120,31 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
   object cxPageDatos: TcxPageControl
     Left = 297
     Top = 0
-    Width = 557
+    Width = 558
     Height = 492
     Align = alClient
     TabOrder = 1
-    Properties.ActivePage = cxPage1
+    Properties.ActivePage = cxPage2
     Properties.CustomButtons.Buttons = <>
     OnChange = cxPageDatosChange
+    ExplicitWidth = 557
     ClientRectBottom = 490
     ClientRectLeft = 2
-    ClientRectRight = 555
+    ClientRectRight = 556
     ClientRectTop = 28
     object cxPage1: TcxTabSheet
       Caption = 'Credencial'
       ImageIndex = 0
+      ExplicitWidth = 553
       object dxLayoutControl1: TdxLayoutControl
         Left = 0
         Top = 0
-        Width = 553
+        Width = 554
         Height = 462
         Align = alClient
         TabOrder = 0
         LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+        ExplicitWidth = 553
         object cxCredencialFolio: TcxTextEdit
           Left = 65
           Top = 10
@@ -1001,14 +1004,16 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
     object cxPage2: TcxTabSheet
       Caption = 'Constancia SUA'
       ImageIndex = 1
+      ExplicitWidth = 553
       object dxLayoutControl3: TdxLayoutControl
         Left = 0
         Top = 0
-        Width = 553
+        Width = 554
         Height = 462
         Align = alClient
         TabOrder = 0
         LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+        ExplicitWidth = 553
         object cxSUANombre: TcxTextEdit
           Left = 96
           Top = 10
@@ -1305,14 +1310,16 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
     object cxPage3: TcxTabSheet
       Caption = 'Empleados Registrados'
       ImageIndex = 2
+      ExplicitWidth = 553
       object dxLayoutControl4: TdxLayoutControl
         Left = 0
         Top = 0
-        Width = 553
+        Width = 554
         Height = 462
         Align = alClient
         TabOrder = 0
         LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+        ExplicitWidth = 553
         object cxgrdEmpleados: TcxGrid
           Left = 10
           Top = 10
@@ -1413,6 +1420,217 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
         end
       end
     end
+    object cxPage4: TcxTabSheet
+      Caption = 'Guardias'
+      ImageIndex = 3
+      ExplicitLeft = 3
+      ExplicitTop = 30
+      ExplicitWidth = 551
+      object cxGrid2: TcxGrid
+        Left = 0
+        Top = 0
+        Width = 554
+        Height = 177
+        Align = alTop
+        TabOrder = 0
+        LookAndFeel.Kind = lfOffice11
+        LookAndFeel.NativeStyle = False
+        ExplicitWidth = 551
+        object cxGridDBTableView3: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          Navigator.Buttons.Insert.Visible = False
+          Navigator.Buttons.Delete.Visible = False
+          Navigator.Buttons.Edit.Visible = False
+          Navigator.Buttons.Post.Visible = False
+          Navigator.Buttons.Cancel.Visible = False
+          Navigator.Buttons.Refresh.Visible = False
+          Navigator.InfoPanel.Visible = True
+          Navigator.Visible = True
+          DataController.DataSource = ds_Guardias
+          DataController.Filter.Options = [fcoCaseInsensitive]
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <>
+          DataController.Summary.SummaryGroups = <>
+          FilterRow.Visible = True
+          FilterRow.ApplyChanges = fracImmediately
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsSelection.MultiSelect = True
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn11: TcxGridDBColumn
+            Caption = 'No. Guardia'
+            DataBinding.FieldName = 'sIdFolio'
+            Width = 79
+          end
+          object cxGridDBColumn12: TcxGridDBColumn
+            Caption = 'Nombre Guardia'
+            DataBinding.FieldName = 'sObservaciones'
+            Width = 99
+          end
+          object cxGridDBColumn13: TcxGridDBColumn
+            Caption = 'Fecha Subida'
+            DataBinding.FieldName = 'dFechaInicial'
+            Width = 100
+          end
+          object cxGridDBColumn14: TcxGridDBColumn
+            Caption = 'Fecha Bajada'
+            DataBinding.FieldName = 'dFechaFinal'
+            Width = 100
+          end
+        end
+        object cxGridLevel3: TcxGridLevel
+          GridView = cxGridDBTableView3
+        end
+      end
+      object cxGrid1: TcxGrid
+        Left = 0
+        Top = 185
+        Width = 554
+        Height = 222
+        TabOrder = 1
+        LookAndFeel.Kind = lfOffice11
+        LookAndFeel.NativeStyle = False
+        object cxGridDBTableView2: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          Navigator.Buttons.Insert.Visible = False
+          Navigator.Buttons.Delete.Visible = False
+          Navigator.Buttons.Edit.Visible = False
+          Navigator.Buttons.Post.Visible = False
+          Navigator.Buttons.Cancel.Visible = False
+          Navigator.Buttons.Refresh.Visible = False
+          Navigator.InfoPanel.Visible = True
+          Navigator.Visible = True
+          DataController.DataSource = ds_detalleguardia
+          DataController.Filter.Options = [fcoCaseInsensitive]
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <>
+          DataController.Summary.SummaryGroups = <>
+          FilterRow.Visible = True
+          FilterRow.ApplyChanges = fracImmediately
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsSelection.MultiSelect = True
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn5: TcxGridDBColumn
+            Caption = ' Id Empleado'
+            DataBinding.FieldName = 'sIdEmpleado'
+            Width = 113
+          end
+          object cxGridDBColumn6: TcxGridDBColumn
+            Caption = ' Nombre'
+            DataBinding.FieldName = 'sNombreCompleto'
+            Width = 124
+          end
+          object cxGridDBColumn7: TcxGridDBColumn
+            Caption = 'Apellido Paterno'
+            DataBinding.FieldName = 'sApellidoPaterno'
+            Width = 135
+          end
+          object cxGridDBColumn8: TcxGridDBColumn
+            Caption = 'Apellido Materno'
+            DataBinding.FieldName = 'sApellidoMaterno'
+            Width = 139
+          end
+        end
+        object cxGridLevel2: TcxGridLevel
+          GridView = cxGridDBTableView2
+        end
+      end
+      object AdvRecibo: TAdvGlowButton
+        Left = 29
+        Top = 413
+        Width = 132
+        Height = 37
+        Caption = 'Reporte de vi'#225'tico'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ImageIndex = 13
+        Images = frmrepositorio.IconosTodos32
+        NotesFont.Charset = DEFAULT_CHARSET
+        NotesFont.Color = clWindowText
+        NotesFont.Height = -11
+        NotesFont.Name = 'Tahoma'
+        NotesFont.Style = []
+        ParentFont = False
+        TabOrder = 2
+        OnClick = AdvReciboClick
+        Appearance.ColorChecked = 16111818
+        Appearance.ColorCheckedTo = 16367008
+        Appearance.ColorDisabled = 15921906
+        Appearance.ColorDisabledTo = 15921906
+        Appearance.ColorDown = 16111818
+        Appearance.ColorDownTo = 16367008
+        Appearance.ColorHot = 16117985
+        Appearance.ColorHotTo = 16372402
+        Appearance.ColorMirrorHot = 16107693
+        Appearance.ColorMirrorHotTo = 16775412
+        Appearance.ColorMirrorDown = 16102556
+        Appearance.ColorMirrorDownTo = 16768988
+        Appearance.ColorMirrorChecked = 16102556
+        Appearance.ColorMirrorCheckedTo = 16768988
+        Appearance.ColorMirrorDisabled = 11974326
+        Appearance.ColorMirrorDisabledTo = 15921906
+      end
+      object dxLayoutControl5: TdxLayoutControl
+        Left = 167
+        Top = 408
+        Width = 381
+        Height = 54
+        TabOrder = 3
+        LayoutLookAndFeel = connection.dxLayoutSkinLookAndFeel1
+        object cxCalcEdit1: TcxCalcEdit
+          Left = 45
+          Top = 10
+          EditValue = 0.000000000000000000
+          ParentFont = False
+          Style.HotTrack = False
+          TabOrder = 0
+          Width = 76
+        end
+        object cxTextEdit1: TcxTextEdit
+          Left = 172
+          Top = 10
+          ParentFont = False
+          Style.HotTrack = False
+          TabOrder = 1
+          Width = 189
+        end
+        object dxLayoutControl5Group_Root: TdxLayoutGroup
+          AlignHorz = ahLeft
+          AlignVert = avTop
+          ButtonOptions.Buttons = <>
+          Hidden = True
+          LayoutDirection = ldHorizontal
+          ShowBorder = False
+          Index = -1
+        end
+        object dxLayoutControl5Item1: TdxLayoutItem
+          Parent = dxLayoutControl5Group_Root
+          CaptionOptions.Text = 'Monto'
+          Control = cxCalcEdit1
+          ControlOptions.ShowBorder = False
+          Index = 0
+        end
+        object dxLayoutControl5Item2: TdxLayoutItem
+          Parent = dxLayoutControl5Group_Root
+          CaptionOptions.Text = 'Autoriza'
+          Control = cxTextEdit1
+          ControlOptions.ShowBorder = False
+          Index = 1
+        end
+      end
+    end
   end
   object OpenPictureDialog1: TOpenPictureDialog
     Left = 248
@@ -1423,7 +1641,7 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
     Top = 8
     DesignDPI = 96
     DesignHeight = 492
-    DesignWidth = 854
+    DesignWidth = 855
     DesignTextHeight = 13
   end
   object rxCredenciales: TRxMemoryData
@@ -1759,7 +1977,7 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
     PrintOptions.Printer = 'Por defecto'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 41341.436711261600000000
-    ReportOptions.LastChange = 42748.597110821760000000
+    ReportOptions.LastChange = 42751.868108159700000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'var'
@@ -1768,33 +1986,27 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
       '  dia  : string;'
       '  anio : string;                                 '
       '  nummes : integer;                                        '
-      '          '
+      '                                                          '
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      '   if <dsSUA."sSexo"> = '#39'Hombre'#39' then'
-      '      sexo := '#39'el'#39
-      '   else                '
-      '      sexo := '#39'la'#39';'
-      ''
+      'begin     '
       '  dia := copy(DateToStr(date),1,2);'
       '  anio := copy(DateToStr(date),7,4);      '
       '  nummes := StrToInt(copy(DateToStr(date),4,2));'
       '  case nummes of       '
-      '     1:  mes:= '#39'Enero'#39';'
-      '     2:  mes:= '#39'Febrero'#39';'
-      '     3:  mes:= '#39'Marzo'#39';'
-      '     4:  mes:= '#39'Abril'#39';'
-      '     5:  mes:= '#39'Mayo'#39';'
-      '     6:  mes:= '#39'Junio'#39';'
-      '     7:  mes:= '#39'Julio'#39';'
-      '     8:  mes:= '#39'Agosto'#39';'
-      '     9:  mes:= '#39'Septiembre'#39';'
-      '     10:  mes:= '#39'Octubre'#39';'
-      '     11:  mes:= '#39'Noviembre'#39';'
-      '     12:  mes:= '#39'Diciembre'#39';         '
+      '     1:  mes:= '#39'ENERO'#39';'
+      '     2:  mes:= '#39'FEBRERO'#39';'
+      '     3:  mes:= '#39'MARZO'#39';'
+      '     4:  mes:= '#39'ABRIL'#39';'
+      '     5:  mes:= '#39'MAYO'#39';'
+      '     6:  mes:= '#39'JUNIO'#39';'
+      '     7:  mes:= '#39'JULIO'#39';'
+      '     8:  mes:= '#39'AGOSTO'#39';'
+      '     9:  mes:= '#39'SEPTIEMBRE'#39';'
+      '     10:  mes:= '#39'OCTUBRE'#39';'
+      '     11:  mes:= '#39'NOVIEMBRE'#39';'
+      '     12:  mes:= '#39'DICIEMBRE'#39';         '
       '        '
-      '  end;                   '
-      '        '
+      '  end;  '
       'end;'
       ''
       'begin'
@@ -1810,12 +2022,8 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
         DataSetName = 'contrato'
       end
       item
-        DataSet = dsSUA
-        DataSetName = 'dsSUA'
-      end
-      item
-        DataSet = frxDBConfiguracion
-        DataSetName = 'frxDBConfiguracion'
+        DataSet = frx_ReporteEmpleados
+        DataSetName = 'frx_ReporteEmpleados'
       end
       item
         DataSet = connection.frxDBConfiguracionRH
@@ -1840,130 +2048,79 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       OnBeforePrint = 'Page1OnBeforePrint'
-      object ReportTitle1: TfrxReportTitle
-        Height = 113.385900000000000000
-        Top = 18.897650000000000000
+      object MasterData1: TfrxMasterData
+        Height = 695.433520000000000000
+        Top = 264.567100000000000000
         Width = 740.409927000000000000
-        object Picture1: TfrxPictureView
-          Left = 24.010513330000000000
-          Top = 12.000000000000000000
-          Width = 199.884663330000000000
-          Height = 84.026283330000000000
-          ShowHint = False
-          DataField = 'bImagen'
-          DataSet = frxDBConfiguracion
-          DataSetName = 'frxDBConfiguracion'
-          HightQuality = False
-        end
-        object Line1: TfrxLineView
-          Left = 15.118120000000000000
-          Top = 105.826840000000000000
-          Width = 702.992580000000000000
-          ShowHint = False
-          Diagonal = True
-        end
-      end
-      object PageFooter1: TfrxPageFooter
-        Height = 71.811070000000000000
-        Top = 963.780150000000000000
-        Width = 740.409927000000000000
-        object Memo1: TfrxMemoView
-          Left = 15.118120000000000000
-          Top = 5.779530000000000000
-          Width = 188.976500000000000000
-          Height = 64.252010000000000000
-          ShowHint = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Memo.UTF8 = (
-            'OFINAS EN VERACUZ'
-            'AQUILES SERDAB 561 INT. B'
-            'COL. CENTRO C.P. 91700'
-            'www.cmmi.com.mx')
-          ParentFont = False
-        end
-        object Memo2: TfrxMemoView
-          Left = 480.000310000000000000
-          Top = 5.779530000000000000
-          Width = 238.110390000000000000
-          Height = 64.252010000000000000
-          ShowHint = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8 = (
-            'OFICINAS EN CD. DEL CARMEN, CAM.:'
-            'CALLE 38 NO. 62 C.P. 24170'
-            'TELS: 938-3820391, 938-3844402'
-            'www.divisioncomercial.com.mx')
-          ParentFont = False
-        end
-        object Line2: TfrxLineView
-          Left = 3.779530000000000000
-          Top = 1.220470000000000000
-          Width = 729.449290000000000000
-          ShowHint = False
-          Diagonal = True
-        end
-      end
-      object ReportSummary1: TfrxReportSummary
-        Height = 748.346940000000000000
-        Top = 192.756030000000000000
-        Width = 740.409927000000000000
-        Stretched = True
+        DataSet = frx_ReporteEmpleados
+        DataSetName = 'frx_ReporteEmpleados'
+        RowCount = 0
         object Rich1: TfrxRichView
-          Width = 737.008350000000000000
-          Height = 744.567410000000000000
+          Left = 37.795300000000000000
+          Top = 1.000000000000000000
+          Width = 668.976810000000000000
+          Height = 676.535870000000000000
           ShowHint = False
           GapX = 2.000000000000000000
           GapY = 1.000000000000000000
           RichEdit = {
             7B5C727466315C616E73695C616E7369637067313235325C64656666305C6465
             666C616E67323035387B5C666F6E7474626C7B5C66305C6673776973735C6670
-            7271325C66636861727365743020417269616C3B7D7B5C66315C66726F6D616E
-            5C66707271325C6663686172736574302054696D6573204E657720526F6D616E
-            3B7D7B5C66325C666E696C205461686F6D613B7D7D0D0A5C766965776B696E64
-            345C7563315C706172645C68797068706172305C6C693432365C72693434305C
-            6C616E67333038325C66305C667332365C7061720D0A5C706172645C68797068
-            706172305C6C693432365C72693432305C7172204369756461642064656C2043
-            61726D656E2C205B486F795D2E5C7061720D0A5C706172645C68797068706172
-            305C6C693432365C72693837375C716A5C7061720D0A5C706172645C68797068
-            706172305C6C693432365C72693837375C71725C66315C667332345C7061720D
-            0A5C706172645C68797068706172305C6C693134325C72693837375C736C3438
-            305C736C6D756C74315C716A5C625C6630204120717569656E20436F72726573
-            706F6E64613A5C7061720D0A5C706172645C68797068706172305C66692D3230
-            305C6C693334325C72693636305C736C3438305C736C6D756C74315C716A5C70
-            61720D0A5C706172645C68797068706172305C6C693234305C72693234305C73
-            6C3438305C736C6D756C74315C716A5C623020506F722065737465206D656469
-            6F20686163656D6F7320636F6E7374617220717565205B7365786F5D20432E20
-            5B64735355412E224E6F6D627265225D20206C61626F725C27663320656E206C
-            6120656D7072657361205B6672784442436F6E66696775726163696F6E2E2273
-            4E6F6D627265225D20656E20656C20706572696F646F20636F6D7072656E6469
-            646F2064656C205B64735355412E2264466563686153554149225D20616C205B
-            64735355412E2264466563686153554146225D20636F6E206C61206361746567
-            6F726961206465205B64735355412E22546974756C6F436172676F225D2C2071
-            7569656E20647572616E7465206573746520706572696F646F20646573656D70
-            655C2766315C27663320636F6E20726573706F6E736162696C69646164206361
-            646120756E61206465207375732061637469766964616465732E5C7061720D0A
-            5C7061720D0A506F72206C6F207175652073652065787469656E6465206C6120
-            70726573656E74652070617261206C6F732066696E6573206C5C276564636974
-            6F73207175652061205B7365786F5D20432E205B64735355412E224E6F6D6272
-            65225D2020636F72726573706F6E64616E2061206C6F73202064696173205B64
-            69615D2064656C206D6573205B6D65735D2064656C20615C2766316F205B616E
-            696F5D2E5C7061720D0A5C706172645C68797068706172305C66692D3230305C
-            6C693632365C72693837375C736C3438305C736C6D756C74315C66315C667332
-            385C7061720D0A5C706172645C68797068706172305C6C693432365C72693837
-            375C71635C66305C66733232204154454E54414D454E54455C7061720D0A5C70
-            61720D0A5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F
-            5F5F5F5F5F5C7061720D0A5B4669726D615F72685D5C7061720D0A5B50756573
-            746F5F72685D5C7061720D0A5C706172645C6C616E67323035385C66325C7061
-            720D0A7D0D0A00}
+            7271325C66636861727365743020417269616C3B7D7B5C66315C667377697373
+            5C66707271325C6663686172736574302043616C696272693B7D7B5C66325C66
+            6E696C5C66636861727365743020417269616C3B7D7D0D0A7B5C636F6C6F7274
+            626C203B5C726564305C677265656E305C626C7565303B5C7265643235355C67
+            7265656E305C626C7565303B7D0D0A5C766965776B696E64345C7563315C7061
+            72645C68797068706172305C6C693432365C72693434305C6C616E6733303832
+            5C66305C667332365C7061720D0A5C706172645C73613230305C736C3237365C
+            736C6D756C74315C71635C625C66733234204349554441442044454C20434152
+            4D454E2C2043414D50454348452041205B6469615D204445205B6D65735D2044
+            454C205B416E696F5D5C6631202E5C7061720D0A5C62305C667332365C706172
+            0D0A5C706172645C73613230305C736C3237365C736C6D756C74315C716A5C66
+            3020524543494249204445204C4120454D505245534120434F4D50415C276431
+            5C27636441204445205C66733234205B6672784442436F6E6669677572616369
+            6F6E52482E22734E6F6D627265225D5C66733236202C204C412043414E544944
+            41442044452020202020202020202020205C756C5C6220245B4D6F6E746F7669
+            617469636F5D20285B4D6F6E746F4C657472615669617469636F5D295C756C6E
+            6F6E655C62302020504F5220434F4E434550544F2044452041504F594F204120
+            414C494D454E544F5320504F522050554552544F204345525241444F5C66315C
+            7061720D0A5C706172645C73613230305C736C3237365C736C6D756C74315C71
+            635C7061720D0A5C625C66302052454349424920454645435449564F5C706172
+            0D0A5C706172645C73613230305C736C3237365C736C6D756C74315C74783237
+            39305C66315C7461625C7061720D0A5C706172645C73613230305C736C323736
+            5C736C6D756C74315C71635C6630205F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F
+            5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5C7061720D0A5C706172645C7361323030
+            5C736C3237365C736C6D756C74315C71635C7471635C7478343235325C747836
+            3435305C7478373033355C6C616E673230353820432E205C6366315C6C616E67
+            313032345C6632205B6672785F5265706F727465456D706C6561646F732E2273
+            4E6F6D627265436F6D706C65746F225D5C63663220205C636631205B6672785F
+            5265706F727465456D706C6561646F732E22734170656C6C69646F5061746572
+            6E6F225D205B6672785F5265706F727465456D706C6561646F732E2273417065
+            6C6C69646F4D617465726E6F225D5C6366305C6C616E67323035385C7061720D
+            0A5C66315C7061720D0A5C7061720D0A5C706172645C73613230305C736C3237
+            365C736C6D756C74315C7061720D0A5C706172645C73613230305C736C323736
+            5C736C6D756C74315C71635C6C616E67333038325C6630204155544F52495A4F
+            20454645435449564F5C7061720D0A5C7061720D0A5F5F5F5F5F5F5F5F5F5F5F
+            5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5F5C7061720D
+            0A5B5669617469636F4175746F72697A615D205C62305C66315C667332345C70
+            61720D0A5C706172645C68797068706172305C6C693432365C72693434305C66
+            305C667332365C7061720D0A7D0D0A00}
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        Height = 185.196970000000000000
+        Top = 18.897650000000000000
+        Width = 740.409927000000000000
+        object Picture1: TfrxPictureView
+          Left = 277.239023330000000000
+          Top = 34.677180000000000000
+          Width = 199.884663330000000000
+          Height = 84.026283330000000000
+          ShowHint = False
+          DataField = 'bImagen'
+          DataSet = connection.frxDBConfiguracionRH
+          DataSetName = 'frxDBConfiguracionRH'
+          HightQuality = False
         end
       end
     end
@@ -2985,6 +3142,109 @@ object frmImprimeDocumentos: TfrmImprimeDocumentos
     end
     object qryEmpleadosCredencialiIdNacionalidad: TIntegerField
       FieldName = 'iIdNacionalidad'
+    end
+  end
+  object ds_Guardias: TDataSource
+    DataSet = zq_Guardias
+    Left = 696
+    Top = 88
+  end
+  object zq_Guardias: TZQuery
+    Connection = connection.zConnection
+    AfterScroll = zq_GuardiasAfterScroll
+    SQL.Strings = (
+      'SELECT * FROM guardias '
+      'where sStatusGuardia="Activo"'
+      'order by iIdGuardia DESC')
+    Params = <>
+    Left = 727
+    Top = 88
+    object zq_GuardiasiIdGuardia: TIntegerField
+      FieldName = 'iIdGuardia'
+    end
+    object zq_GuardiassIdFolio: TStringField
+      FieldName = 'sIdFolio'
+    end
+    object zq_GuardiassObservaciones: TStringField
+      FieldName = 'sObservaciones'
+    end
+    object zq_GuardiasdFechaInicial: TDateField
+      FieldName = 'dFechaInicial'
+    end
+    object zq_GuardiasdFechaFinal: TDateField
+      FieldName = 'dFechaFinal'
+    end
+    object zq_GuardiasID_PeriodoGuardia: TIntegerField
+      FieldName = 'ID_PeriodoGuardia'
+    end
+  end
+  object ds_detalleguardia: TDataSource
+    DataSet = zqDetalleGuardia
+    Left = 560
+    Top = 272
+  end
+  object zqDetalleGuardia: TZQuery
+    Connection = connection.zConnection
+    SQL.Strings = (
+      'select e.*'
+      'from guardiasmovtos gm'
+      'inner join empleados e on (e.sIdEmpleado = gm.sIdEmpleado)'
+      'inner join nuc_cargo p on (p.IdCargo = gm.iId_Puesto)'
+      
+        'inner join guardias g on ((g.sIdFolio = gm.iIdGuardia) and (g.sS' +
+        'tatusGuardia = "Activo"))'
+      
+        'inner join nom_periodosguardia pg on (gm.iIdGuardia = pg.idGuard' +
+        'ia and gm.ID_guardiaperiodo = pg.IdPeriodosGuardia)'
+      
+        'where (gm.iIdGuardia  = :guardia and gm.ID_GuardiaPeriodo = :Gua' +
+        'rdiaPeriodo) group by e.sIdEmpleado order by gm.iIdGuardiaMovtos'
+      '')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'guardia'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'GuardiaPeriodo'
+        ParamType = ptUnknown
+      end>
+    Left = 592
+    Top = 272
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'guardia'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'GuardiaPeriodo'
+        ParamType = ptUnknown
+      end>
+    object zqDetalleGuardiasIdEmpleado: TStringField
+      FieldName = 'sIdEmpleado'
+      Required = True
+    end
+    object zqDetalleGuardiasNombreCompleto: TStringField
+      FieldName = 'sNombreCompleto'
+      Size = 50
+    end
+    object zqDetalleGuardiasApellidoPaterno: TStringField
+      FieldName = 'sApellidoPaterno'
+      Size = 35
+    end
+    object zqDetalleGuardiasApellidoMaterno: TStringField
+      FieldName = 'sApellidoMaterno'
+      Size = 35
+    end
+    object zqDetalleGuardiadFechaSubida: TDateField
+      FieldName = 'dFechaSubida'
+    end
+    object zqDetalleGuardiadFechaBajada: TDateField
+      FieldName = 'dFechaBajada'
     end
   end
 end

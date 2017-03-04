@@ -330,6 +330,8 @@ type
     zqHistorialdFechaBajada: TDateField;
     zqHistorialTotal: TLargeintField;
     ImprimeSelccionado1: TMenuItem;
+    zqHistorialPlataforma: TStringField;
+    zqHistorialTituloGuardia: TStringField;
     procedure FormShow(Sender: TObject);
     procedure btnImprimeContratoTierraClick(Sender: TObject);
     procedure frxContratosGetValue(const VarName: string; var Value: Variant);
@@ -796,10 +798,12 @@ begin
         zqHistorial.SQL.Add('SELECT  h.*, '+
                     'e.sNombreCompleto, '+
                     'e.sApellidoPaterno, '+
-                    'e.sApellidoMaterno, gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.dFechaSubida)+1 as Total '+
+                    'e.sApellidoMaterno, gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.dFechaSubida)+1 as Total, p.sDescripcion as Plataforma, ng.TituloGuardia '+
                     'FROM historialcontrato h '+
                     'inner join empleados e on (e.sIdEmpleado = h.sIDEmpleado) '+
-                    'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = h.ID_PeriodoGuardia and gm.sIdEmpleado = h.sIdEmpleado )');
+                    'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = h.ID_PeriodoGuardia and gm.sIdEmpleado = h.sIdEmpleado ) '+
+                    'inner join plataformas p on (p.sIdPlataforma = gm.sIdPlataforma) '+
+                    'inner join nom_guardia ng on (gm.iIdGuardia = ng.IdGuardia)');
         zqHistorial.Open;
         cxTipoDocumento.Enabled := True;
     end;
@@ -814,10 +818,12 @@ begin
         zqHistorial.SQL.Add('SELECT  h.*, '+
                     'e.sNombreCompleto, '+
                     'e.sApellidoPaterno, '+
-                    'e.sApellidoMaterno, gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.dFechaSubida)+1 as Total '+
+                    'e.sApellidoMaterno, gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.dFechaSubida)+1 as Total, p.sDescripcion as Plataforma, ng.TituloGuardia '+
                     'FROM historialcontrato h '+
                     'inner join empleados e on (e.sIdEmpleado = h.sIDEmpleado) '+
-                    'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = h.ID_PeriodoGuardia and gm.sIdEmpleado = h.sIdEmpleado )');
+                    'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = h.ID_PeriodoGuardia and gm.sIdEmpleado = h.sIdEmpleado ) ' +
+                    'inner join plataformas p on (p.sIdPlataforma = gm.sIdPlataforma) '+
+                    'inner join nom_guardia ng on (gm.iIdGuardia = ng.IdGuardia)');
         zqHistorial.Open;
         cxTipoDocumento.Enabled := False;
 
@@ -962,7 +968,7 @@ begin
            lSalto := False;
            zqHistorial.Filtered := false;
            lSalto := True;
-           zqHistorial.Filter :=' ID_PeriodoGuardia = '+ QuotedStr(IntToStr(zq_guardias.FieldByName('iIdGuardia').AsInteger));
+           zqHistorial.Filter :=' ID_PeriodoGuardia = '+ QuotedStr(zq_guardias.FieldByName('sIdFolio').AsString);
            zqHistorial.Filtered := True;
 
            if zqHistorial.FieldByName('id_catalogoitemschecklist_doctos').IsNull then
@@ -1201,6 +1207,11 @@ begin
   if CompareText(VarName,'DiasT') = 0 then
   begin
     Value := zqhistorial.FieldByName('Total').AsInteger;
+  end;
+
+  if CompareText(VarName,'Pozo') = 0 then
+  begin
+    Value := zqhistorial.FieldByName('Plataforma').AsString;
   end;
 
  if VarName = 'HorarioLaboral' then

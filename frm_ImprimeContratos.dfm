@@ -516,7 +516,7 @@ object frmImprimeContratos: TfrmImprimeContratos
     Height = 359
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     OnChange = cxPageChange
     ClientRectBottom = 357
@@ -622,8 +622,8 @@ object frmImprimeContratos: TfrmImprimeContratos
           OptionsView.ColumnAutoWidth = True
           OptionsView.GroupByBox = False
           object cxGridDBColumn1: TcxGridDBColumn
-            Caption = 'N'#250'm'
-            DataBinding.FieldName = 'iIdContrato'
+            Caption = 'Guardia'
+            DataBinding.FieldName = 'TituloGuardia'
             Width = 79
           end
           object cxGridDBColumn2: TcxGridDBColumn
@@ -1146,11 +1146,14 @@ object frmImprimeContratos: TfrmImprimeContratos
         'as sApellidoMaterno,'
       
         'gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.d' +
-        'FechaSubida)+1 as Total'
+        'FechaSubida)+1 as Total, p.sDescripcion as Plataforma, ng.Titulo' +
+        'Guardia'
       'FROM historialcontrato hc'
       
         'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = hc.ID_Pe' +
-        'riodoGuardia and gm.sIdEmpleado = hc.sIdEmpleado )')
+        'riodoGuardia and gm.sIdEmpleado = hc.sIdEmpleado )'
+      'inner join plataformas p on (p.sIdPlataforma = gm.sIdPlataforma)'
+      'inner join nom_guardia ng on (gm.iIdGuardia = ng.IdGuardia)')
     Params = <>
     Left = 952
     Top = 176
@@ -1208,6 +1211,14 @@ object frmImprimeContratos: TfrmImprimeContratos
     end
     object zqHistorialTotal: TLargeintField
       FieldName = 'Total'
+    end
+    object zqHistorialPlataforma: TStringField
+      FieldName = 'Plataforma'
+      Size = 50
+    end
+    object zqHistorialTituloGuardia: TStringField
+      FieldName = 'TituloGuardia'
+      Size = 120
     end
   end
   object ds_historialcontrato: TDataSource

@@ -2830,7 +2830,7 @@ begin
           end;
         end;
       global_movimiento := 'Eliminó';
-      mov:= 'Se realizó la eliminación del postulante con ficha No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']';
+      mov:= 'Se realizó la eliminación del postulante con ficha No. [' + dszQEmpleados.DataSet.FieldByName('sIdEmpleado').AsString + ']';
       kardex_almacen(mov, global_movimiento);
       except
         MessageDlg('Ocurrio un error al eliminar el registro.', mtInformation, [mbOk], 0);
@@ -3203,9 +3203,9 @@ begin
 //    end;
 //  end;
     if global_movimiento = 'Insertó' then
-      mov:= 'Se realizó la inserción del Empleado No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']'
+      mov:= 'Se realizó la inserción del Empleado No. [' + zQEmpleados.FieldByName('sIdEmpleado').AsString + ']'
     else if global_movimiento = 'Modificó' then
-      mov:= 'Se realizó la modificacion del Empleado No. [' + dszQEmpleados.DataSet.FieldByName('sIdPersonal').AsString + ']';
+      mov:= 'Se realizó la modificacion del Empleado No. [' + zQEmpleados.FieldByName('sIdEmpleado').AsString + ']';
 
   kardex_almacen(mov, global_movimiento);
 
