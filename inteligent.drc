@@ -6143,6 +6143,8 @@ END
 /* frm_SintesisGerencial.dfm */
 /* C:\Componentes delphi 2007\Rx Library\Units\RXTConst.R32 */
 /* C:\Componentes delphi 2007\Rx Library\Units\rxSbSetup.DFM */
+/* D:\SourceTree 2017\Noil-RH-2017\frm_montarespaldo.dfm */
+/* frm_respaldo.dfm */
 /* frm_EstimacionAlbum.dfm */
 /* frm_estimaciones.dfm */
 /* C:\Users\Developer\Documents\tmssoftware\TMS Component Pack\ADVSPIN.RES */
@@ -6539,11 +6541,11 @@ END
 /* frm_DistribucionPrograma.dfm */
 /* frm_isometricos_grupo.dfm */
 /* frm_ProcRegAvFisico.dfm */
-/* frm_acerca.dfm */
 /* frm_WizardContrato.dfm */
 /* frm_AltaServidor.dfm */
 /* frm_acceso.dfm */
-/* D:\SourceTree 2017\Noil-RH-2017\frm_seleccion2.dfm */
+/* frm_acerca.dfm */
+/* frm_seleccion2.dfm */
 /* frm_AvisosAlertas.dfm */
 /* frm_warningdia.dfm */
 /* frm_tipsdia.dfm */
@@ -6619,6 +6621,7 @@ END
 /* frm_EntradaEQSeguridad.dfm */
 /* frm_CatalogoDatosBancarios.dfm */
 /* c:\program files (x86)\codegear\rad studio\5.0\lib\midas.res */
+/* frm_respaldocompleto.dfm */
 /* D:\SourceTree 2017\Noil-RH-2017\inteligent.TLB */
 /* D:\SourceTree 2017\Noil-RH-2017\inteligent.res */
 /* D:\SourceTree 2017\Noil-RH-2017\inteligent.drf */

@@ -11,7 +11,7 @@ uses
   sPanel, utilerias, StoHtmlHelp, rxSpeedbar,
   frxpngimage, ToolWin, unt_ventas,
   UnitExcepciones, frm_SintesisGerencial,
-  frm_herramientas, frm_copiacontratos,             
+  frm_herramientas, frm_copiacontratos,
   JvBackgrounds, Buttons, frm_catalogoerrores, iniFiles, ZConnection,
   unitmanejofondo, masutilerias,
   RxLookup, DBCtrls, Grids, DBGrids, rxToolEdit, rxCurrEdit, RXDBCtrl,
@@ -47,6 +47,9 @@ uses
   JvBrowseFolder, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, DateUtils, dxBarBuiltInMenu,
   dxRibbonCustomizationForm, FormAutoScaler, dxGDIPlusClasses ;
+
+const
+	InputBoxMessage = WM_USER + 200;
 
 type
   //TfrmInteligent = class(TForm)
@@ -550,6 +553,9 @@ type
     dxBarButton29: TdxBarButton;
     dxBarButton30: TdxBarButton;
     dxBarButton31: TdxBarButton;
+    dxBarButton32: TdxBarButton;
+    btnRespaldoCompleto: TdxBarButton;
+    btnMontaRespaldo: TdxBarButton;
 
   procedure FormShow(Sender: TObject);
   procedure adConfiguracionClick(Sender: TObject);
@@ -995,6 +1001,9 @@ type
     procedure dxBarLargeButton11Click(Sender: TObject);
     procedure dxBarButton29Click(Sender: TObject);
     procedure dxBarButton30Click(Sender: TObject);
+    procedure btnRespaldoCompletoClick(Sender: TObject);
+    procedure InputBoxSetPasswordChar(var Msg: TMessage); message InputBoxMessage;
+    procedure btnMontaRespaldoClick(Sender: TObject);
 private
   { Private declarations }
   Cotizaciones : TNotificacionesVentas;
@@ -1124,7 +1133,8 @@ uses frm_contratos, frm_deptos, frm_usuarios,
   frmDepsincuentas, frm_AsignarFactura, utfrmdepartamentos, UtfrmCatalogoSalarios ,
   frm_anexosCotemar, frm_catalogomodulos, frm_Modulosxusuario,
   frm_ReporteErrores, frmBancos, frm_CambioContrato, frm_SetupPU,
-  frm_ImprimeDocumentos;//fin de uses
+  frm_ImprimeDocumentos, frm_respaldo, frm_montarespaldo;//fin de uses
+  
 {$R *.dfm}
 
 function  GetAppVersion:string;
@@ -4614,6 +4624,18 @@ begin
    end;
 end;
 
+procedure TfrmInteligent.InputBoxSetPasswordChar(var Msg: TMessage);
+var
+	  hInputForm, hEdit: HWND;
+begin
+  hInputForm := Screen.Forms[0].Handle;
+  if (hInputForm <> 0) then
+  begin
+    hEdit := FindWindowEx(hInputForm, 0, 'TEdit', nil);
+    SendMessage(hEdit, EM_SETPASSWORDCHAR, Ord('*'), 0);
+  end;
+end;
+
 procedure TfrmInteligent.InstitucionesEducativas1Click(Sender: TObject);
 begin
 if not MostrarFormChild('frmcatalogoentidadeseducativas') Then
@@ -5534,6 +5556,24 @@ begin
     end;
 end;
 
+procedure TfrmInteligent.btnRespaldoCompletoClick(Sender: TObject);
+var pwd : String;
+begin
+// Request Password
+  PostMessage(Handle, InputBoxMessage, 0, 0);
+  pwd:=InputBox('¡Seguridad de Conexiones!', 'Ingresar contraseña:','');
+  if pwd = 'admindsai0317' then
+  begin
+    Application.CreateForm(TfrmObtenerRespaldo, frmObtenerRespaldo);
+    frmObtenerRespaldo.ShowModal;
+  end
+  else
+  begin
+    //MsgBox.ShowModal('Error', 'Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar', cmtError, [cmbOK]);
+  end;
+
+end;
+
 procedure TfrmInteligent.btnAsignarcuentaClick(Sender: TObject);
 begin
   if not mostrarformChild('frmAsignarFactura') then
@@ -5604,6 +5644,25 @@ if not MostrarFormChild('frmCatalogoModulos') Then
   begin
     Application.CreateForm(TfrmCatalogoModulos, frmCatalogoModulos);
     frmCatalogoModulos.show;
+  end;
+end;
+
+procedure TfrmInteligent.btnMontaRespaldoClick(Sender: TObject);
+var pwd : String;
+begin
+// Request Password
+  PostMessage(Handle, InputBoxMessage, 0, 0);
+  pwd:=InputBox('¡Seguridad de Conexiones!', 'Ingresar contraseña:','');
+  if pwd = 'admindsai0317' then
+  begin
+    Application.CreateForm(TfrmMontarRespaldo, frmMontarRespaldo);
+    frmMontarRespaldo.ShowModal;
+  end
+  else
+  begin
+    MessageDlg('Contraseña incorecta, no  posee permisos, vuelva a intentar',mtError,[mbOk],0);
+    //showMessage('Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar');
+    //MsgBox.ShowModal('Error', 'Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar', cmtError, [cmbOK]);
   end;
 end;
 

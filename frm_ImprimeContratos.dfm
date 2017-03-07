@@ -1146,11 +1146,12 @@ object frmImprimeContratos: TfrmImprimeContratos
         'as sApellidoMaterno,'
       
         'gm.dFechaSubida, gm.dFechaBajada, DATEDIFF(gm.dFechaBajada, gm.d' +
-        'FechaSubida)+1 as Total'
+        'FechaSubida)+1 as Total, p.sDescripcion as Plataforma'
       'FROM historialcontrato hc'
       
         'inner join guardiasmovtos gm on (gm.ID_GuardiaPeriodo = hc.ID_Pe' +
-        'riodoGuardia and gm.sIdEmpleado = hc.sIdEmpleado )')
+        'riodoGuardia and gm.sIdEmpleado = hc.sIdEmpleado )'
+      'inner join plataformas p on (p.sIdPlataforma = gm.sIdPlataforma)')
     Params = <>
     Left = 952
     Top = 176
@@ -1208,6 +1209,10 @@ object frmImprimeContratos: TfrmImprimeContratos
     end
     object zqHistorialTotal: TLargeintField
       FieldName = 'Total'
+    end
+    object zqHistorialPlataforma: TStringField
+      FieldName = 'Plataforma'
+      Size = 50
     end
   end
   object ds_historialcontrato: TDataSource

@@ -5,31 +5,44 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Buttons, StdCtrls, NxCollection, StrUtils, ExtCtrls, global, frm_connection, ShellAPI,
-  ExtDlgs;
+  ExtDlgs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
+  dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, dxLayoutContainer, dxLayoutControl,
+  cxContainer, cxEdit, dxLayoutcxEditAdapters, cxTextEdit,
+  dxLayoutControlAdapters, Menus, cxButtons;
 
 type
-  TfrmRespaldo = class(TForm)
+  TfrmObtenerRespaldo = class(TForm)
     dguardar: TSaveDialog;
-    NxButton8: TNxButton;
-    Image1: TImage;
-    NxButton4: TNxButton;
-    txtRespaldoDir: TEdit;
-    Label1: TLabel;
-    SpeedButton1: TSpeedButton;
-    CmdImportar: TNxButton;
-    txtOrigenDir: TEdit;
-    Label2: TLabel;
-    OpenTextFileDialog1: TOpenTextFileDialog;
-    SpeedButton2: TSpeedButton;
+    dxLayoutControl1Group_Root: TdxLayoutGroup;
+    dxLayoutControl1: TdxLayoutControl;
+    txtRespaldoDir: TcxTextEdit;
+    dxLayoutControl1Item1: TdxLayoutItem;
+    SpeedButton1: TcxButton;
+    dxLayoutControl1Item2: TdxLayoutItem;
+    NxButton4: TcxButton;
+    dxLayoutControl1Item3: TdxLayoutItem;
+    dxLayoutControl1Group1: TdxLayoutAutoCreatedGroup;
+    NxButton8: TcxButton;
+    dxLayoutControl1Item4: TdxLayoutItem;
     procedure SpeedButton1Click(Sender: TObject);
     procedure NxButton8Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure NxButton4Click(Sender: TObject);
-    procedure CmdImportarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     function CmdExec(Cmd: string): string;
     function IsWinNT: boolean;
-    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +50,7 @@ type
   end;
 
 var
-  frmRespaldo: TfrmRespaldo;
+  frmObtenerRespaldo: TfrmObtenerRespaldo;
 
 implementation
 
@@ -45,7 +58,7 @@ implementation
 
 {$R *.dfm}
 
-function TfrmRespaldo.IsWinNT: boolean;
+function TfrmObtenerRespaldo.IsWinNT: boolean;
 var
   OSV: OSVERSIONINFO;
 begin
@@ -54,7 +67,7 @@ begin
   result := OSV.dwPlatformId = VER_PLATFORM_WIN32_NT;
 end;
 
-function TfrmRespaldo.CmdExec(Cmd: string): string;
+function TfrmObtenerRespaldo.CmdExec(Cmd: string): string;
 var
   Buffer: array[0..4096] of Char;
   si: STARTUPINFO;
@@ -112,88 +125,17 @@ begin
   end;
 end;
 
-
-procedure TfrmRespaldo.CmdImportarClick(Sender: TObject);
-var
-  instruccion, cadaux, nombre, ruta: string;
-  arch: integer;
-  sMysqlExe: string;
-  sResultados: string;
-begin
-//  connection.qryParametros.Active := false;
-//  connection.qryParametros.Open;
-//  sMysqlExe := connection.qryParametros.FieldValues['sMysqlExeDir'];
-  sMysqlExe := 'C:/';
-  if (sMysqlExe = '') or (sMysqlExe = ' ') then
-  begin
-    MessageDlgpos('No ha configurado las rutas de mysql en el modulo Configuracion, no se hace nada!',
-      mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
-    exit;
-  end;
-
-  if txtOrigenDir.Text = '' then
-  begin
-    MessageDlgpos('Seleccion un nombre archivo donde se guardara el respaldo, no se hace nada!',
-      mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
-    exit;
-  end;
-
-  if MessageDlg('Al Importar el Archivo .sql reemplazara la informacion Existente. Se recomienda guardar un respaldo de la informacion. Desea Continuar ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  begin
-    if MessageDlg('Esta Seguro que desea Importar el Archivo ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    begin
-      cadAux := ReverseString(dguardar.FileName);
-      arch := pos('\', cadaux);
-      nombre := copy(dguardar.FileName, length(dguardar.FileName) - arch, length(dguardar.FileName));
-      ruta := copy(dguardar.FileName, 1, length(dguardar.FileName) - arch);
-      instruccion := 'cmd /c "' + sMysqlExe + '" -uroot -pdanae -h' + connection.zConnection.HostName + ' ' + connection.zConnection.Database + ' < "' + txtOrigenDir.Text + '"';
-
-
-      CmdImportar.Enabled := false;
-      NxButton4.Enabled := false;
-      NxButton8.Enabled := false;
-      SpeedButton1.Enabled := false;
-      SpeedButton2.Enabled := false;
-
-      sResultados := CmdExec(instruccion);
-      if sResultados = '' then
-        MessageDlgpos('Carga Exitosa!',
-          mtInformation, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2))
-      else
-        MessageDlgpos('Mensaje del sistema: ' + sResultados,
-          mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
-      CmdImportar.Enabled := true;
-      NxButton4.Enabled := true;
-      NxButton8.Enabled := true;
-      SpeedButton1.Enabled := true;
-      SpeedButton2.Enabled := true;
-
-//      application.CreateForm(Tfrmbloqueo, frmbloqueo);
-//      frmbloqueo.instruccion := instruccion;
-//      frmbloqueo.Top := self.Top;
-//      frmbloqueo.Left := self.Left;
-//      frmbloqueo.Width := self.Width;
-//      frmbloqueo.Height := self.Height;
-//      try
-//        frmbloqueo.Showmodal;
-//      finally
-//        freeandnil(frmbloqueo);
-//      end;
-    end;
-  end;
-end;
-
-procedure TfrmRespaldo.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmObtenerRespaldo.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   action := cafree;
 end;
 
-procedure TfrmRespaldo.FormShow(Sender: TObject);
+procedure TfrmObtenerRespaldo.FormShow(Sender: TObject);
 begin
  // Connection.GetLogo(Image1);
 end;
 
-procedure TfrmRespaldo.NxButton4Click(Sender: TObject);
+procedure TfrmObtenerRespaldo.NxButton4Click(Sender: TObject);
 var
   instruccion, cadaux, nombre, ruta: string;
   arch: integer;
@@ -223,18 +165,18 @@ begin
   arch := pos('\', cadaux);
   nombre := copy(dguardar.FileName, length(dguardar.FileName) - arch, length(dguardar.FileName));
   ruta := copy(dguardar.FileName, 1, length(dguardar.FileName) - arch);
-  instruccion := 'cmd /c "' + sMysqldumpExe + '" -uroot -pcleopatra --routines  -h' +
+  instruccion := 'cmd /c "' + sMysqldumpExe + '" -udsaisolu_cmmi_16 -pcmmi_nomina1216 --routines  -h' +
     connection.zConnection.HostName + ' ' +
     connection.zConnection.Database + ' > "' +
     cadAux + '"';
   showmessage('El archivo se Guardara en: ' + cadAux);
 
   //ShellExecute(0, nil, PAnsiChar(instruccion),  nil, nil, SW_SHOWMAXIMIZED );
-  CmdImportar.Enabled := false;
+
   NxButton4.Enabled := false;
   NxButton8.Enabled := false;
   SpeedButton1.Enabled := false;
-  SpeedButton2.Enabled := false;
+
   sResultados := CmdExec(instruccion);
   if sResultados = '' then
     MessageDlgpos('Respaldo Realizado con exito!',
@@ -242,12 +184,10 @@ begin
   else
     MessageDlgpos('Mensaje del sistema: ' + sResultados,
       mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
-  CmdImportar.Enabled := true;
+
   NxButton4.Enabled := true;
   NxButton8.Enabled := true;
   SpeedButton1.Enabled := true;
-  SpeedButton2.Enabled := true;
-
    {
   application.CreateForm(Tfrmbloqueo, frmbloqueo);
   frmbloqueo.instruccion := instruccion;
@@ -266,26 +206,16 @@ begin
 
 end;
 
-procedure TfrmRespaldo.NxButton8Click(Sender: TObject);
+procedure TfrmObtenerRespaldo.NxButton8Click(Sender: TObject);
 begin
   self.Close;
 end;
 
-procedure TfrmRespaldo.SpeedButton1Click(Sender: TObject);
+procedure TfrmObtenerRespaldo.SpeedButton1Click(Sender: TObject);
 begin
   if dguardar.Execute() then
     txtRespaldoDir.Text := dguardar.FileName
   else txtRespaldoDir.Text := '';
-end;
-
-procedure TfrmRespaldo.SpeedButton2Click(Sender: TObject);
-begin
-
-  if OpenTextFileDialog1.Execute() then
-    txtOrigenDir.Text := OpenTextFileDialog1.FileName
-  else txtOrigenDir.Text := '';
-
-
 end;
 
 end.

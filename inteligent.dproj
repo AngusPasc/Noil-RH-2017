@@ -589,6 +589,9 @@
     <DCCReference Include="frm_ModuloTraspaso.pas">
       <Form>frmModuloTraspaso</Form>
     </DCCReference>
+    <DCCReference Include="frm_montarespaldo.pas">
+      <Form>frmMontarRespaldo</Form>
+    </DCCReference>
     <DCCReference Include="frm_nivelorganizacion.pas">
       <Form>frmnivelorganizacion</Form>
     </DCCReference>
@@ -738,6 +741,12 @@
     </DCCReference>
     <DCCReference Include="frm_residencias.pas">
       <Form>frmResidencias</Form>
+    </DCCReference>
+    <DCCReference Include="frm_respaldo.pas">
+      <Form>frmObtenerRespaldo</Form>
+    </DCCReference>
+    <DCCReference Include="frm_respaldocompleto.pas">
+      <Form>frmRespaldoCompleto</Form>
     </DCCReference>
     <DCCReference Include="frm_retecionesypenas.pas">
       <Form>frmRetencionesyPenas</Form>

@@ -327,7 +327,10 @@ uses
   UTFrmProgramaDeSalud in 'UTFrmProgramaDeSalud.pas' {FrmProgramaDeSalud},
   frm_ImprimeDocumentos in 'frm_ImprimeDocumentos.pas' {frmImprimeDocumentos},
   UnitGenerales in 'UnitGenerales.pas',
-  frm_Medidas in 'frm_Medidas.pas' {frmMedidas};
+  frm_Medidas in 'frm_Medidas.pas' {frmMedidas},
+  frm_respaldo in 'frm_respaldo.pas' {frmObtenerRespaldo},
+  frm_respaldocompleto in 'frm_respaldocompleto.pas' {frmRespaldoCompleto},
+  frm_montarespaldo in 'frm_montarespaldo.pas' {frmMontarRespaldo};
 
 {$R *.TLB}
 
@@ -347,6 +350,9 @@ begin
   Application.CreateForm(TFrmPropiedades, FrmPropiedades);
   Application.CreateForm(Tfrmrepositorio, frmrepositorio);
   Application.CreateForm(TInteliDialog, InteliDialog);
+  Application.CreateForm(TfrmObtenerRespaldo, frmObtenerRespaldo);
+  Application.CreateForm(TfrmRespaldoCompleto, frmRespaldoCompleto);
+  Application.CreateForm(TfrmMontarRespaldo, frmMontarRespaldo);
   Application.Run;
 end.
 
