@@ -58,6 +58,10 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     function PruebaCon: boolean;
     procedure cxButton1Click(Sender: TObject);
+    procedure GlobalKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure EnterControl(Sender: TObject);
+    procedure SalidaControl(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -162,38 +166,40 @@ begin
       mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
     exit;
   end;
-
-  if MessageDlg('Al Importar el Archivo .sql reemplazara la informacion Existente. Se recomienda guardar un respaldo de la informacion. Desea Continuar ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if PruebaCon then
   begin
-    if MessageDlg('Esta Seguro que desea Importar el Archivo ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Al Importar el Archivo .sql reemplazara la informacion Existente. Se recomienda guardar un respaldo de la informacion. Desea Continuar ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      cadAux := ReverseString(dguardar.FileName);
-      arch := pos('\', cadaux);
-      nombre := copy(dguardar.FileName, length(dguardar.FileName) - arch, length(dguardar.FileName));
-      ruta := copy(dguardar.FileName, 1, length(dguardar.FileName) - arch);
+      if MessageDlg('Esta Seguro que desea Importar el Archivo ? ', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        cadAux := ReverseString(dguardar.FileName);
+        arch := pos('\', cadaux);
+        nombre := copy(dguardar.FileName, length(dguardar.FileName) - arch, length(dguardar.FileName));
+        ruta := copy(dguardar.FileName, 1, length(dguardar.FileName) - arch);
       //instruccion := 'cmd /c "' + sMysqlExe + '" -uroot -pdanae -h' + connection.zConnection.HostName + ' ' + connection.zConnection.Database + ' < "' + txtOrigenDir.Text + '"';
-      instruccion := 'cmd /c "' + sMysqlExe + '" '+
-      '-u' + edtUser.Text +' '+
-      '-p' + edtPass.Text +' '+
-      '-h' + edtHost.Text +' '+
-      edtBD.Text + ' < "' +
-      txtOrigenDir.Text + '"';
+        instruccion := 'cmd /c "' + sMysqlExe + '" '+
+        '-u' + edtUser.Text +' '+
+        '-p' + edtPass.Text +' '+
+        '-h' + edtHost.Text +' '+
+        edtBD.Text + ' < "' +
+        txtOrigenDir.Text + '"';
 
-      CmdImportar.Enabled := false;
-      NxButton8.Enabled := false;
-      SpeedButton2.Enabled := false;
+        CmdImportar.Enabled := false;
+        NxButton8.Enabled := false;
+        SpeedButton2.Enabled := false;
 
-      sResultados := CmdExec(instruccion);
-      if sResultados = '' then
-        MessageDlgpos('Carga Exitosa!',
-          mtInformation, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2))
-      else
-        MessageDlgpos('Mensaje del sistema: ' + sResultados,
-          mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
+        sResultados := CmdExec(instruccion);
+        if sResultados = '' then
+          MessageDlgpos('Carga Exitosa!',
+            mtInformation, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2))
+        else
+          MessageDlgpos('Mensaje del sistema: ' + sResultados,
+            mtError, [mbOk], 0, self.Left + round(self.Width / 4) + 10, self.Top + round(self.Height / 2));
 
-      CmdImportar.Enabled := true;
-      NxButton8.Enabled := true;
-      SpeedButton2.Enabled := true;
+        CmdImportar.Enabled := true;
+        NxButton8.Enabled := true;
+        SpeedButton2.Enabled := true;
+      end;
     end;
   end;
 end;
@@ -201,8 +207,14 @@ end;
 procedure TfrmMontarRespaldo.cxButton1Click(Sender: TObject);
 begin
   if PruebaCon then
-    ShowMessage('Conexion no realizada, verifique sus datos');
+    MessageDlg('Se ha realizó exitosamente la conexión a la base de datos.', mtInformation,[mbOk],0);
 
+end;
+
+procedure TfrmMontarRespaldo.EnterControl(Sender: TObject);
+begin
+  if (sender is tcxTextEdit) then
+        tcxTextEdit(sender).Style.Color := global_color_entradaERP;
 end;
 
 procedure TfrmMontarRespaldo.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -213,6 +225,16 @@ end;
 procedure TfrmMontarRespaldo.FormShow(Sender: TObject);
 begin
  // Connection.GetLogo(Image1);
+end;
+
+procedure TfrmMontarRespaldo.GlobalKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+  begin
+    Perform( CM_DIALOGKEY, VK_TAB, 0 );
+    Key := 0;
+  end;
 end;
 
 procedure TfrmMontarRespaldo.NxButton8Click(Sender: TObject);
@@ -227,11 +249,13 @@ begin
   result := False;
   HuboError := False;
   try
+    if zPruebaConexion.Connected then
+      zPruebaConexion.Disconnect;
+
   zPruebaConexion.HostName  := edtHost.Text;
   zPruebaConexion.User      := edtUser.Text;
   zPruebaConexion.Password  := edtPass.Text;
   zPruebaConexion.Database  := edtBD.Text;
-
   zPruebaConexion.Connect;
 
   except
@@ -248,6 +272,13 @@ begin
   end;
 
 
+
+end;
+
+procedure TfrmMontarRespaldo.SalidaControl(Sender: TObject);
+begin
+  if (sender is tcxTextEdit) then
+        tcxTextEdit(sender).Style.Color := global_color_salidaERP;
 
 end;
 

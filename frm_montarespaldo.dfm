@@ -25,11 +25,11 @@ object frmMontarRespaldo: TfrmMontarRespaldo
     Height = 269
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 281
     object txtOrigenDir: TcxTextEdit
       Left = 130
       Top = 14
       ParentFont = False
+      Properties.ReadOnly = True
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -87,6 +87,9 @@ object frmMontarRespaldo: TfrmMontarRespaldo
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       TabOrder = 2
+      OnEnter = EnterControl
+      OnExit = SalidaControl
+      OnKeyUp = GlobalKeyUp
       Width = 231
     end
     object edtUser: TcxTextEdit
@@ -97,6 +100,9 @@ object frmMontarRespaldo: TfrmMontarRespaldo
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       TabOrder = 3
+      OnEnter = EnterControl
+      OnExit = SalidaControl
+      OnKeyUp = GlobalKeyUp
       Width = 299
     end
     object edtBD: TcxTextEdit
@@ -107,6 +113,9 @@ object frmMontarRespaldo: TfrmMontarRespaldo
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       TabOrder = 5
+      OnEnter = EnterControl
+      OnExit = SalidaControl
+      OnKeyUp = GlobalKeyUp
       Width = 121
     end
     object edtPass: TcxTextEdit
@@ -118,6 +127,9 @@ object frmMontarRespaldo: TfrmMontarRespaldo
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
       TabOrder = 4
+      OnEnter = EnterControl
+      OnExit = SalidaControl
+      OnKeyUp = GlobalKeyUp
       Width = 121
     end
     object CmdImportar: TcxButton

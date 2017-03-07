@@ -5569,7 +5569,7 @@ begin
   end
   else
   begin
-    //MsgBox.ShowModal('Error', 'Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar', cmtError, [cmbOK]);
+    MessageDlg('Contraseña incorecta, no  posee permisos, vuelva a intentar',mtError,[mbOk],0);
   end;
 
 end;
@@ -5661,8 +5661,6 @@ begin
   else
   begin
     MessageDlg('Contraseña incorecta, no  posee permisos, vuelva a intentar',mtError,[mbOk],0);
-    //showMessage('Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar');
-    //MsgBox.ShowModal('Error', 'Contraseña incorecta, no  posee permisos de edición de conexiones, vuelva a intentar', cmtError, [cmbOK]);
   end;
 end;
 
